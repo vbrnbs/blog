@@ -11,7 +11,7 @@ import DeleteArticle from "./DeleteArticle";
 import EditArticle from "./EditArticle";
 import Footer from "./Footer";
 import { Header } from "./Header";
-import { FilterData } from "./FilterData";
+import FilterData from "./FilterData";
 import PageChange from "./PageChange";
 
 const Articles = ({ edit }) => {

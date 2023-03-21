@@ -7,7 +7,7 @@ function Footer() {
       <Contact />
       <div className="flex flex-col justify-between">
         <div className="text-right hidden sm:block">
-          Barnabás Várszegi <br />
+          <strong>Barnabás Várszegi</strong> <br />
           varszegibarnabas@gmail.com
         </div>
         <Logos />

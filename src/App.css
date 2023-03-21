@@ -16,10 +16,10 @@ textarea {
   border: 1px solid #000000;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 4px;
-  padding: 0.25rem;
+  padding: 0.25rem 0.5rem 0.25rem 0.5rem;
   margin-bottom: 0.5rem !important;
   width: 600px;
-  font-size: 0.2rem;
+  font-size: 0.75rem !important;
 }
 
 button {
@@ -42,10 +42,15 @@ button {
   input,
   textarea {
     width: 100%;
+    font-size: 1rem !important;
   }
   .email-btn {
     width: 100%;
     padding: 0.2rem;
     margin: 1.2rem 0 1.2rem 0;
   }
+}
+.spinAndExpand {
+  transition: transform 0.9s ease-in-out;
+  transition-delay: 0.05s;
 }
