@@ -52,7 +52,7 @@ function Contact() {
       <div>
         <label htmlFor="message"></label>
         <textarea
-          className="inline-block h-32"
+          className="inline-block h-32 mb-0"
           id="message"
           placeholder="message"
           value={message}

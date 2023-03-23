@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import search from "../icons/search.svg";
 import expand from "../icons/expand.svg";
+import Button from "./Button";
+import AddFilter from "./AddFilter";
+import SearchBar from "./SearchBar";
+import AllNone from "./AllNone";
 
 const FilterData = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -8,32 +12,18 @@ const FilterData = () => {
 
   const handleClick = () => {
     setIsClicked(!isClicked);
-    setIsVisible(!isVisible);
+    setTimeout(() => {
+      setIsVisible(!isVisible);
+    }, 500); // add a delay of 1 second (1000 milliseconds)
   };
 
-  const rotation = isClicked ? "540deg" : "0deg";
-  const scale = isClicked ? "scale(1.3)" : "scale(1.5)";
-
-  const style = {
-    transform: "translateY(-60%)",
-  };
+  const rotation = isClicked ? "180deg" : "0deg";
+  const scale = isClicked ? "scale(1)" : "scale(1.5)";
 
   return (
-    <div className="top-16 left-0 w-full p-4 rounded-lg border-2 border-black">
+    <div className="top-16 left-0 w-full p-4 rounded-lg border-1 border-black">
       <div className="flex justify-between">
-        <div className="relative">
-          <input
-            className="py-2 pl-4 w-60 rounded-lg"
-            type="text"
-            placeholder=""
-          />
-          <img
-            className="h-6 absolute top-50 right-5"
-            style={style}
-            src={search}
-            alt="search"
-          />
-        </div>
+        <SearchBar logo={search} width="w-60" right="right-2" />
         <div className="icon-container cursor-pointer flex mr-2">
           <img
             className="spinAndExpand items-center"
@@ -45,7 +35,18 @@ const FilterData = () => {
         </div>
       </div>
       {isVisible && (
-        <div className="p-4 mt-4">{/* Filter options content goes here */}</div>
+        <div className="flex justify-between">
+          <div className="mt-2 flex flex-wrap">
+            {/* Filter options content goes here <Button title="gsap" /> */}
+            <Button tag="GSAP" />
+            <Button tag="React" />
+            <Button tag="google aws" />
+            <Button tag="io" />
+            <Button tag="arduino" />
+            <AddFilter />
+          </div>
+          <AllNone />
+        </div>
       )}
     </div>
   );

@@ -33,11 +33,11 @@ const Articles = ({ edit }) => {
   return (
     <>
       <Header />
-      <div className=" container">
+      <div className="mt-16 container">
         <FilterData />
       </div>
 
-      {
+      {/*
         <div className="flex items-center flex-col">
           {articles.length === 0 ? (
             <p>no artciles found</p>
@@ -88,7 +88,7 @@ const Articles = ({ edit }) => {
             ))
           )}
         </div>
-      }
+      */}
       <PageChange />
       <Footer />
     </>
