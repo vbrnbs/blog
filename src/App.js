@@ -7,7 +7,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Articles show={false} />} />
+        <Route path="/" element={<Articles edit={false} />} />
         <Route path="/admin" element={<Admin />} />
       </Routes>
     </Router>

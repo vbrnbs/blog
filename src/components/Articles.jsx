@@ -36,59 +36,54 @@ const Articles = ({ edit }) => {
       <div className="mt-16 container">
         <FilterData />
       </div>
-
-      {/*
-        <div className="flex items-center flex-col">
-          {articles.length === 0 ? (
-            <p>no artciles found</p>
-          ) : (
-            articles.map((article) => (
-              <div
-                className="container p-3 bg-light mt-3 rounded"
-                key={article.id}
-              >
-                <div className="row mt-16">
-                  <div className="col-3">
-                    <img
-                      src={article.imageUrl}
-                      alt="title"
-                      style={{ height: "auto", width: 120 }}
-                    />
-                  </div>
-                  <div className="col-9 ps-3">
-                    <h2>{article.title}</h2>
-                    <p>{article.createdAt.toDate().toDateString()}</p>
-                    <h4>{article.text}</h4>
-                    <span>tags: </span>
-                    {article.tags.map((tag) => (
-                      <a key={tag}>
-                        <span> #{tag}</span>
-                      </a>
-                    ))}
-                  </div>
-                  {edit === true && (
-                    <div>
-                      <DeleteArticle
-                        id={article.id}
-                        imageUrl={article.imageUrl}
-                      />
-                      <EditArticle data={article} />
-                    </div>
-                  )}
-                  <div>
-                    <a href={article.git} target="_blank" rel="noreferrer">
-                      view on github
-                    </a>
-                    <a href={article.url} target="_blank" rel="noreferrer">
-                      open live
-                    </a>
-                  </div>
+      <div className="flex items-center container flex-col">
+        {articles.length === 0 ? (
+          <p>no artciles found</p>
+        ) : (
+          articles.map((article) => (
+            <div
+              className="px-8 p-8 mt-3 w-full rounded-lg border-black border-1"
+              key={article.id}
+            >
+              <div className="lg:flex lg:grid lg:grid-cols-3 lg:gap-8">
+                {/* IMAGE */}
+                <div className="w-full lg:col-span-1">
+                  <img src={article.imageUrl} alt="title" className="" />
+                </div>
+                <div className="col-span-2">
+                  <h2 className="windsor">{article.title}</h2>
+                  <p>{article.createdAt.toDate().toDateString()}</p>
+                  <p className="text-md text-grey-900">{article.text}</p>
                 </div>
               </div>
-            ))
-          )}
-        </div>
-      */}
+              {edit === true && (
+                <div>
+                  <DeleteArticle id={article.id} imageUrl={article.imageUrl} />
+                  <EditArticle data={article} />
+                </div>
+              )}
+              <div>
+                <div>
+                  <a href={article.git} target="_blank" rel="noreferrer">
+                    view on github
+                  </a>
+                  <a href={article.url} target="_blank" rel="noreferrer">
+                    open live
+                  </a>
+                </div>
+                <div>
+                  <span>tags: </span>
+                  {article.tags.map((tag) => (
+                    <a key={tag}>
+                      <span> #{tag}</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
       <PageChange />
       <Footer />
     </>
