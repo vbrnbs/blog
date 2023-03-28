@@ -13,28 +13,66 @@ import Footer from "./Footer";
 import { Header } from "./Header";
 import FilterData from "./FilterData";
 import PageChange from "./PageChange";
+import Button from "./Button";
 
 const Articles = ({ edit }) => {
   const [articles, setArticles] = useState([]);
+  const [tagsCount, setTagsCount] = useState({});
 
   useEffect(() => {
     const articleRef = collection(db, "posts");
 
     const q = query(articleRef, orderBy("createdAt", "desc"));
-    onSnapshot(q, (snapshot) => {
+    const unsubscribe = onSnapshot(q, (snapshot) => {
       const articles = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
       setArticles(articles);
+      // console.log("Fetched articles:", articles);
     });
+
+    return unsubscribe;
   }, []);
+
+  useEffect(() => {
+    // Create an empty array to store all the tags
+    const tagsArray = [];
+    const tagsCount = {};
+
+    // Loop through each article and get the tags array
+    articles.forEach((article) => {
+      const tags = article.tags;
+
+      // Loop through each tag in the tags array
+      tags.forEach((tag) => {
+        // If the tag is not in the tags array, add it
+        if (!tagsArray.includes(tag)) {
+          tagsArray.push(tag);
+        }
+
+        // If the tag is in the tags count object, increment the count
+        if (tagsCount[tag]) {
+          tagsCount[tag] += 1;
+        } else {
+          // If the tag is not in the tags count object, add it with a count of 1
+          tagsCount[tag] = 1;
+        }
+      });
+    });
+
+    // Update the state with the tags count object
+    setTagsCount(tagsCount);
+    // console.log("Tags count:", tagsCount);
+  }, [articles]);
 
   return (
     <>
-      <Header />
+      <div>
+        <Header />
+      </div>
       <div className="mt-16 container">
-        <FilterData />
+        <FilterData tags={{ tagsCount }} />
       </div>
       <div className="flex items-center container flex-col">
         {articles.length === 0 ? (
@@ -45,47 +83,75 @@ const Articles = ({ edit }) => {
               className="px-8 p-8 mt-3 w-full rounded-lg border-black border-1"
               key={article.id}
             >
-              <div className="lg:flex lg:grid lg:grid-cols-3 lg:gap-8">
-                {/* IMAGE */}
-                <div className="w-full lg:col-span-1">
-                  <img src={article.imageUrl} alt="title" className="" />
+              <div className="md:flex">
+                {/* IMAGE  lg:grid lg:grid-cols-2*/}
+                <div>
+                  <img
+                    src={article.imageUrl}
+                    alt="image"
+                    className="post-image"
+                  />
                 </div>
-                <div className="col-span-2">
-                  <h2 className="windsor">{article.title}</h2>
-                  <p>{article.createdAt.toDate().toDateString()}</p>
-                  <p className="text-md text-grey-900">{article.text}</p>
+                <div className="md:pl-3 h-72h">
+                  <div className="m-0 p-0 h-4">
+                    <h2 className="windsor text-lg mb-0 md:mt-0 mt-2 font-semibold">
+                      {article.title}
+                    </h2>
+
+                    <p className="text-xs windsor">
+                      {article.createdAt.toDate().toDateString()}
+                    </p>
+                  </div>
+
+                  <div className="h-24 md:h-56 mt-12 overflow-hidden relative text-container">
+                    <p className="text-sm text-grey-900 font-light ">
+                      {article.text}
+                    </p>
+                  </div>
                 </div>
               </div>
               {edit === true && (
-                <div>
+                <div className="flex justify-end">
                   <DeleteArticle id={article.id} imageUrl={article.imageUrl} />
                   <EditArticle data={article} />
                 </div>
               )}
               <div>
-                <div>
-                  <a href={article.git} target="_blank" rel="noreferrer">
-                    view on github
-                  </a>
-                  <a href={article.url} target="_blank" rel="noreferrer">
-                    open live
-                  </a>
-                </div>
-                <div>
-                  <span>tags: </span>
+                <div className="flex flex-wrap">
                   {article.tags.map((tag) => (
-                    <a key={tag}>
-                      <span> #{tag}</span>
-                    </a>
+                    <Button tag={tag} key={article.id} />
                   ))}
+                </div>
+                <div className="flex my-4">
+                  <a
+                    href={article.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-gray-800 font-light  no-underline mr-4"
+                  >
+                    VISIT LIVE PROJECT
+                  </a>
+                  |
+                  <a
+                    href={article.git}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-gray-800  font-light no-underline ml-4"
+                  >
+                    GITHUB
+                  </a>
                 </div>
               </div>
             </div>
           ))
         )}
       </div>
-      <PageChange />
-      <Footer />
+      <div>
+        <PageChange />
+      </div>
+      <div>
+        <Footer />
+      </div>
     </>
   );
 };

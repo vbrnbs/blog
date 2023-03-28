@@ -6,7 +6,7 @@ import AddFilter from "./AddFilter";
 import SearchBar from "./SearchBar";
 import AllNone from "./AllNone";
 
-const FilterData = () => {
+const FilterData = ({ tags }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
 
@@ -19,6 +19,8 @@ const FilterData = () => {
 
   const rotation = isClicked ? "180deg" : "0deg";
   const scale = isClicked ? "scale(1)" : "scale(1.5)";
+  const tagEntries = Object.entries(tags.tagsCount);
+  console.log(tagEntries);
 
   return (
     <div className="top-16 left-0 w-full p-4 rounded-lg border-1 border-black">
@@ -38,11 +40,9 @@ const FilterData = () => {
         <div className="flex justify-between">
           <div className="mt-2 flex flex-wrap">
             {/* Filter options content goes here <Button title="gsap" /> */}
-            <Button tag="GSAP" />
-            <Button tag="React" />
-            <Button tag="google aws" />
-            <Button tag="io" />
-            <Button tag="arduino" />
+            {tagEntries.map(([name, count]) => (
+              <Button tag={name} count={count} />
+            ))}
             <AddFilter />
           </div>
           <AllNone />
