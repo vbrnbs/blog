@@ -1,15 +1,13 @@
-import search from "../icons/search.svg";
-import add from "../icons/add.svg";
-
 const style = {
   transform: "translateY(-63%)",
 };
 
-const SearchBar = ({ width, logo, right, addFilter }) => {
+const SearchBar = ({ width, logo, right, addFilter, onFilter }) => {
   const addChosenFilter = () => {
     addFilter();
     console.log("filter added and closed bar");
   };
+
   return (
     <div className="relative">
       <input

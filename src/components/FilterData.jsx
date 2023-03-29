@@ -9,6 +9,7 @@ import AllNone from "./AllNone";
 const FilterData = ({ tags }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
+  const [filteredPosts, setFilteredPosts] = useState([]);
 
   const handleClick = () => {
     setIsClicked(!isClicked);
@@ -20,7 +21,7 @@ const FilterData = ({ tags }) => {
   const rotation = isClicked ? "180deg" : "0deg";
   const scale = isClicked ? "scale(1)" : "scale(1.5)";
   const tagEntries = Object.entries(tags.tagsCount);
-  console.log(tagEntries);
+  // console.log(tagEntries);
 
   return (
     <div className="top-16 left-0 w-full p-4 rounded-lg border-1 border-black">
