@@ -18,9 +18,11 @@ import Button from "./Button";
 const Articles = ({ edit }) => {
   const [articles, setArticles] = useState([]);
   const [tagsCount, setTagsCount] = useState({});
+  const array = JSON.stringify(articles);
 
   useEffect(() => {
     const articleRef = collection(db, "posts");
+
     const q = query(articleRef, orderBy("createdAt", "desc"));
 
     const unsubscribe = onSnapshot(q, (snapshot) => {
@@ -56,8 +58,12 @@ const Articles = ({ edit }) => {
 
       // Update the state with the articles and tags count
       setArticles(articles);
+      console.log(articles);
+      const filteredPosts = articles.filter((post) =>
+        post.tags.includes("react")
+      );
+      console.log(filteredPosts);
       setTagsCount(tagsCount);
-      // console.log(articles);
     });
 
     return unsubscribe;
@@ -71,6 +77,7 @@ const Articles = ({ edit }) => {
         <FilterData tags={{ tagsCount }} />
       </div>
       <div className="flex items-center container flex-col">
+        {array}
         {articles.length === 0 ? (
           <p>no artciles found</p>
         ) : (
