@@ -17,7 +17,7 @@ function Blog() {
     getPosts();
     }, []);
 
-console.log(postLists)
+// console.log(postLists)
 
 return(
     <div className="homePage">
@@ -37,7 +37,7 @@ return(
           </div>
         );
       })} */}
-      {/* <Filter3 data={postLists}/> */}
+      {/* <Filter data={postLists}/> */}
     </div>
 )
 
