@@ -34,6 +34,11 @@ button {
   margin-left: 50px;
 }
 
+.active {
+  background: #000000 !important;
+  color: #ffffff !important;
+}
+
 .email-btn {
   transform: translateY(-12px);
 }
