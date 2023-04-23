@@ -4,6 +4,7 @@ const Blog = ({ data: posts }) => {
   const [filteredPosts, setFilteredPosts] = useState(posts)
   const [filters, setFilters] = useState([])
   const [selectedFilters, setSelectedFilters] = useState([])
+  const [searchValue, setSearchValue] = useState('')
 
   useEffect(() => {
     const getTags = filteredPosts.reduce((acc, post) => {
@@ -11,7 +12,7 @@ const Blog = ({ data: posts }) => {
         acc[tag] = (acc[tag] || 0) + 1;
       });
       return acc;
-    }, {});    
+    }, {});
     setFilters(getTags)
   }, [filteredPosts])
 
@@ -35,6 +36,19 @@ const Blog = ({ data: posts }) => {
     }
   }, [selectedFilters, posts]);
 
+  const searchKeyword = (e) => {
+    const keyword = e.target.value.toLowerCase();
+    setSearchValue(keyword);
+    const filtered = posts.filter(post => post.text.toLowerCase().includes(keyword) || post.title.toLowerCase().includes(keyword) || post.tags.includes(keyword));
+    setFilteredPosts(filtered);
+  }
+
+  const onSearch = (searchTerm) => {
+    setSearchValue(searchTerm);
+  }
+
+
+
   console.log("filters :>>", filters)
   console.log("selected Filters :>>", selectedFilters)
 
@@ -44,6 +58,25 @@ const Blog = ({ data: posts }) => {
 
   return (
     <div>
+      {/* Filters    filters, selectedFilters*/}
+      <div>
+        <input type="text" placeholder="Search" value={searchValue} onChange={(e) => searchKeyword(e)} />
+        <div className="search-results">
+          {
+            posts.filter(post => {
+              const query = post.text.toLowerCase();
+              const searchTerm = searchValue.toLowerCase();
+
+              return searchTerm && query.includes(searchTerm);
+            })
+              
+            .map((post) => 
+            <div onClick={()=> onSearch(post.text)} key={post.id}>{post.title}{post.text}{post.tags}</div>
+            )}
+            
+
+            </div> 
+      </div>
       {/* Filters    filters, selectedFilters*/}
       <div>
         {
@@ -60,12 +93,9 @@ const Blog = ({ data: posts }) => {
               </button>
             ))
         }
-        <button
-        onClick={() => setSelectedFilters([])}
-        >
+        <button onClick={() => setSelectedFilters([])}>
           Clear
         </button>
-    
       </div>
       {/* Posts filteredPosts*/}
       <div>
