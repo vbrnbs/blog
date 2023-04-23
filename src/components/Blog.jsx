@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 const Blog = (posts) => {
   const [filteredPosts, setFilteredPosts] = useState(posts.data)
   const [filters, setFilters] = useState([])
-  const [selectedFilters, setSelectedFilters ] = useState([])
+  const [selectedFilters, setSelectedFilters] = useState([])
 
   useEffect(() => {
     const getTags = filteredPosts.reduce((acc, post) => {
@@ -11,13 +11,13 @@ const Blog = (posts) => {
         acc[tag] ? acc[tag]++ : acc[tag] = 1
       })
       return acc;
-    }, {})
+    }, {});
     setFilters(getTags)
   }, [filteredPosts])
 
   const handleClickFilter = (tag) => {
     if (selectedFilters.includes(tag)) {
-      setSelectedFilters(selectedFilters.filter((t) => t !== tag)) 
+      setSelectedFilters(selectedFilters.filter((t) => t !== tag))
     } else {
       setSelectedFilters([...selectedFilters, tag])
     }
@@ -25,30 +25,43 @@ const Blog = (posts) => {
 
   useEffect(() => {
     if (selectedFilters.length > 0) {
-      selectedFilters.map((tag) => 
-        setFilteredPosts(posts.data.filter((post) => post.tags.includes(tag)))
-      )
+      const filtered = posts.data.filter(post =>
+        selectedFilters.every(tag => post.tags.includes(tag))
+      );
+      const sorted = filtered.sort((a, b) => b.tags.filter(tag => selectedFilters.includes(tag)).length - a.tags.filter(tag => selectedFilters.includes(tag)).length);
+      setFilteredPosts(sorted);
     } else {
-      setFilteredPosts(posts.data)
+      setFilteredPosts(posts.data);
     }
-  }, [selectedFilters])
+  }, [selectedFilters]);
+
+  console.log("filters :>>", filters)
+  console.log("selected Filters :>>", selectedFilters)
 
   return (
     <div>
       {/* Filters    filters, selectedFilters*/}
       <div>
         {
-          filters && Object.entries(filters).map(([tag, count], idx) => (
-            <button 
-              key={`#${tag}-${idx}`}
-              onClick={() => handleClickFilter(tag)}
-              className={selectedFilters.includes(tag) ? "active" : ""}
+          filters &&
+          Object.entries(filters)
+            .sort(([, countA], [, countB]) => countB - countA)
+            .map(([tag, count], idx) => (
+              <button
+                key={`#${tag}-${idx}`}
+                onClick={() => handleClickFilter(tag)}
+                className={selectedFilters.includes(tag) ? "active" : ""}
               >
-              {`#${tag}(${count})`}
-            </button>
-          ))
+                {`#${tag}(${count})`}
+              </button>
+            ))
         }
-
+        <button
+        onClick={selectedFilters => setSelectedFilters([])}
+        >
+          Clear
+        </button>
+    
       </div>
       {/* Posts filteredPosts*/}
       <div>
@@ -65,7 +78,7 @@ const Blog = (posts) => {
           ))
         }
       </div>
-    </div>
+    </div >
   )
 }
 
