@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Blog from "./components/Blog";
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "./firebaseConfig";
-// import Admin from "./components/Admin";
 
 function App() {
 
@@ -22,8 +21,6 @@ function App() {
   
       getPosts();
       }, []);
-
-    //   console.log(postLists)
 
   return (
      <Router>

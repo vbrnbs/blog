@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react'
 
-const Blog = (posts) => {
-  const [filteredPosts, setFilteredPosts] = useState(posts.data)
+const Blog = ({ data: posts }) => {
+  const [filteredPosts, setFilteredPosts] = useState(posts)
   const [filters, setFilters] = useState([])
   const [selectedFilters, setSelectedFilters] = useState([])
 
   useEffect(() => {
     const getTags = filteredPosts.reduce((acc, post) => {
       post.tags.forEach((tag) => {
-        acc[tag] ? acc[tag]++ : acc[tag] = 1
-      })
+        acc[tag] = (acc[tag] || 0) + 1;
+      });
       return acc;
-    }, {});
+    }, {});    
     setFilters(getTags)
   }, [filteredPosts])
 
@@ -25,18 +25,22 @@ const Blog = (posts) => {
 
   useEffect(() => {
     if (selectedFilters.length > 0) {
-      const filtered = posts.data.filter(post =>
+      const filtered = posts.filter(post =>
         selectedFilters.every(tag => post.tags.includes(tag))
       );
       const sorted = filtered.sort((a, b) => b.tags.filter(tag => selectedFilters.includes(tag)).length - a.tags.filter(tag => selectedFilters.includes(tag)).length);
       setFilteredPosts(sorted);
     } else {
-      setFilteredPosts(posts.data);
+      setFilteredPosts(posts);
     }
-  }, [selectedFilters]);
+  }, [selectedFilters, posts]);
 
   console.log("filters :>>", filters)
   console.log("selected Filters :>>", selectedFilters)
+
+  if (!posts) {
+    return <div>Sorry, the data blog is not available at the moment. </div>;
+  }
 
   return (
     <div>
@@ -57,7 +61,7 @@ const Blog = (posts) => {
             ))
         }
         <button
-        onClick={selectedFilters => setSelectedFilters([])}
+        onClick={() => setSelectedFilters([])}
         >
           Clear
         </button>
