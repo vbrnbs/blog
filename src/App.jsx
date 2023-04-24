@@ -13,12 +13,11 @@ function App() {
   
     useEffect(() => {
       const getPosts = async () => {
-        // setLoading(true);
+        setLoading(true);
         const data = await getDocs(postsCollectionRef);
         setPostList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
         setLoading(false);
       };
-  
       getPosts();
       }, []);
 
@@ -28,10 +27,8 @@ function App() {
          {loading ? 
             (<Route>Loading...</Route> )
             :
-            
             (<Route path="/" element={<Blog data={postLists} />} />
             )}
-         {/*<Route path="/admin" element={<Admin />} />*/}
        </Routes>
      </Router>
   );

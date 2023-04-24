@@ -1,6 +1,7 @@
 import React from 'react'
 
-const Posts = ({filteredPosts}) => {
+const Posts = ({ filteredPosts }) => {
+
     return (
         <div>
             {

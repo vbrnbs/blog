@@ -1,6 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-const SearchBar = ({posts, onSearch, searchKeyword, searchValue}) => {
+const SearchBar = ({ posts, setFilteredPosts }) => {
+  const [searchValue, setSearchValue] = useState('');
+
+  const searchKeyword = (e) => {
+    const keyword = e.target.value.toLowerCase();
+    setSearchValue(keyword);
+    const filtered = posts.filter(post => post.text.toLowerCase().includes(keyword) || post.title.toLowerCase().includes(keyword) || post.tags.includes(keyword));
+    setFilteredPosts(filtered);
+  }
+
+  const onSearch = (searchTerm) => {
+    setSearchValue(searchTerm);
+    setSearchValue("");
+  }
+
   return (
     <div>
       <div>
@@ -13,7 +27,6 @@ const SearchBar = ({posts, onSearch, searchKeyword, searchValue}) => {
 
               return searchTerm && query.includes(searchTerm);
             })
-
               .map((post) =>
                 <div onClick={() => onSearch(post.text)} key={post.id}>{post.title}=|={post.text}|{post.tags}</div>
               )}

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 
-const Filter = ({posts, filteredPosts, setFilteredPosts, selectedFilters, clearFilters}) => {
+const Filter = ({ posts, filteredPosts, setFilteredPosts }) => {
   const [filters, setFilters] = useState([]);
+  const [selectedFilters, setSelectedFilters] = useState([]);
 
   useEffect(() => {
     const getTags = filteredPosts.reduce((acc, post) => {
@@ -32,9 +33,15 @@ const Filter = ({posts, filteredPosts, setFilteredPosts, selectedFilters, clearF
       setFilteredPosts(posts);
     }
   }, [selectedFilters, posts]);
-  
+
+  const clearFilters = () => {
+    setSelectedFilters([]);
+    setSearchValue("");
+  }
+
   console.log("filters :>>", filters)
   console.log("selected Filters :>>", selectedFilters)
+
   return (
     <div>
       <div>
