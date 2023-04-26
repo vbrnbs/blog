@@ -2,36 +2,40 @@ import "./App.css";
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Blog from "./components/Blog";
-import { getDocs, collection } from "firebase/firestore";
+import { getDocs, collection, query, orderBy } from "firebase/firestore";
 import { db } from "./firebaseConfig";
 
 function App() {
+  const [postList, setPostList] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-    const [postLists, setPostList] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const postsCollectionRef = collection(db, "posts");
-  
-    useEffect(() => {
-      const getPosts = async () => {
-        setLoading(true);
-        const data = await getDocs(postsCollectionRef);
-        setPostList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-        setLoading(false);
-      };
-      getPosts();
-      }, []);
+  useEffect(() => {
+    const getPosts = async () => {
+      const postsCollectionRef = collection(db, "posts");
+      const q = query(postsCollectionRef, orderBy("createdAt", "desc"));
+      const querySnapshot = await getDocs(q);
+      const data = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+      setPostList(data);
+      setLoading(false);
+    };
+
+    getPosts();
+  }, []);
 
   return (
-     <Router>
-       <Routes>
-         {loading ? 
-            (<Route>Loading...</Route> )
-            :
-            (<Route path="/" element={<Blog data={postLists} />} />
-            )}
-       </Routes>
-     </Router>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Blog data={postList} />} />
+      </Routes>
+    </Router>
   );
 }
 
 export default App;
+
+         {/* {loading ? 
+            (<Route>Loading...</Route> )
+            :
+            (<Route path="/" element={<Blog data={postLists} />} />
+            )
+         } */}

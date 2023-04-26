@@ -1,7 +1,13 @@
 import React, { useState } from 'react'
+// import { db } from "../firebaseConfig";
+// import { doc, deleteDoc } from "firebase/firestore";
 
 
 const Posts = ({ filteredPosts, handleClickFilter, selectedFilters }) => {
+
+    // const deletePost = async (id) => {
+    //     await deleteDoc(doc(db, "posts", id));
+    // }
 
     const formattedDate = (d) => {
         const date = new Date(0); // create a new Date object with the value of zero (January 1, 1970)
@@ -27,6 +33,7 @@ const Posts = ({ filteredPosts, handleClickFilter, selectedFilters }) => {
                             <h1>{post.title}</h1>
                             <h2>{Date(post.createdAt.miliseconds)}</h2>
                             <p className='mt-3 max-h-32 overflow-scroll'>{post.text}</p>
+                            {/* <button onClick={deletePost(post.id)}>delete</button> */}
                             </div>
                             <div>
                             {post.tags.map((tag, idx) => (
