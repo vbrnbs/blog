@@ -13,6 +13,9 @@ const Posts = ({ filteredPosts, handleClickFilter, selectedFilters }) => {
     return (
         <div>
             {
+                !filteredPosts ?
+                <>Loading</>
+                :
                 filteredPosts.map((post) => (
                     <div key={post.id} className='flex my-24'>
                         <div>

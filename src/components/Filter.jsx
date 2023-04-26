@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 
-const Filter = ({ posts, filteredPosts, setFilteredPosts }) => {
+const Filter = ({ posts, filteredPosts, setFilteredPosts, selectedFilters, setSelectedFilters, handleClickFilter, setSearchValue }) => {
   const [filters, setFilters] = useState([]);
-  const [selectedFilters, setSelectedFilters] = useState([]);
+  
 
   useEffect(() => {
     const getTags = filteredPosts.reduce((acc, post) => {
@@ -13,14 +13,6 @@ const Filter = ({ posts, filteredPosts, setFilteredPosts }) => {
     }, {});
     setFilters(getTags)
   }, [filteredPosts])
-
-  const handleClickFilter = (tag) => {
-    if (selectedFilters.includes(tag)) {
-      setSelectedFilters(selectedFilters.filter((t) => t !== tag))
-    } else {
-      setSelectedFilters([...selectedFilters, tag])
-    }
-  }
 
   useEffect(() => {
     if (selectedFilters.length > 0) {
@@ -39,12 +31,12 @@ const Filter = ({ posts, filteredPosts, setFilteredPosts }) => {
     setSearchValue("");
   }
 
-  console.log("filters :>>", filters)
-  console.log("selected Filters :>>", selectedFilters)
+  // console.log("filters :>>", filters)
+  // console.log("selected Filters :>>", selectedFilters)
 
   return (
-    <div>
-      <div>
+    <div className='flex justify-between'>
+      <div className='mb-3 flex-warp w-100'>   
         {
           filters &&
           Object.entries(filters)
@@ -59,10 +51,14 @@ const Filter = ({ posts, filteredPosts, setFilteredPosts }) => {
               </button>
             ))
         }
-        <button onClick={clearFilters}>
-          Clear
-        </button>
+        
+         
       </div>
+      <div className='mt-2 flex justify-end'>
+         <div className='cursor-pointer windsor truncate' onClick={clearFilters}>
+            Clear filters
+          </div >
+        </div>
     </div>
   )
 }

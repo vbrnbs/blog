@@ -3,7 +3,7 @@ import Icons from './Icons'
 
 const Footer = () => {
     return (
-        <div className='md:flex md:justify-between px-3 my-4'>
+        <div className='md:flex md:justify-between my-4'>
             <div className='md:flex md:items-end'>
                 <div className='flex-col'>
                     <div><input type="text" placeholder='e-mail' /></div>
