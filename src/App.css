@@ -43,6 +43,12 @@ button, .button {
   margin-left: 50px;
 }
 
+.form-control {
+  /* width: auto; */
+  width: 1000px !important;
+  /* align-self: center; */
+}
+
 h1 {
   font-family: 'Windsor';
   font-style: normal;

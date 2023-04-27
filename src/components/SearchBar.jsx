@@ -19,11 +19,8 @@ const SearchBar = ({ posts, filteredPosts, setFilteredPosts, setSearchValue, sea
     setSearchValue(searchTerm);
     const filtered = filteredPosts.filter(post => post.text.toLowerCase().includes(searchTerm) || post.title.toLowerCase().includes(searchTerm) || post.tags.includes(searchTerm));
     setFilteredPosts(filtered);
-    setClicked(true)
-    
+    setClicked(true) 
   }
-
-  console.log(clicked)
 
   return (
       <div className="mt-2">

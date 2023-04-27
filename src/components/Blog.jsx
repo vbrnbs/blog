@@ -4,7 +4,7 @@ import Posts from './Posts'
 import Filter from './Filter'
 import Header from './Header'
 import Footer from './Footer'
-import CreatePost from './CreatePost'
+import CreatePost from './Editing/CreatePost'
 
 const Blog = ({ data: posts }) => {
   const [filteredPosts, setFilteredPosts] = useState(posts);
