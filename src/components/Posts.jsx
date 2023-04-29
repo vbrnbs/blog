@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import DeletePost from './Editing/DeletePost';
+import EditPost from './Editing/EditPost';
 // import { db } from "../firebaseConfig";
 // import { doc, deleteDoc } from "firebase/firestore";
 
@@ -22,43 +23,46 @@ const Posts = ({ filteredPosts, handleClickFilter, selectedFilters }) => {
         <div>
             {
                 !filteredPosts ?
-                <>Loading</>
-                :
-                filteredPosts.map((post) => (
-                    <div key={post.id} className='flex my-24 border border w-auto'>
-                        <div>
-                            {/* 405x205 from 2026/1024 mac*/}
-                            <img className='w-img rounded-sm drop-shadow-sm object-cover' src={post.imageUrl} alt={post.title} />
-                        </div>
-                        <div className='ml-8 flex flex-col justify-between border w-auto'>
+                    <>Loading</>
+                    :
+                    filteredPosts.map((post) => (
+                        <div key={post.id} className='flex my-24 border border w-auto'>
                             <div>
-                            <h1>{post.title}</h1>
-                            <h2>{Date(post.createdAt.miliseconds)}</h2>
-                            <p className='mt-3 max-h-32 overflow-scroll'>{post.text}</p>
-                            {/* <button onClick={deletePost(post.id)}>delete</button> */}
+                                {/* 405x205 from 2026/1024 mac*/}
+                                <img className='w-img rounded-sm drop-shadow-sm object-cover' src={post.imageUrl} alt={post.title} />
                             </div>
-                            <div className='flex justify-between border w-auto'>
+                            <div className='ml-8 flex flex-col justify-between border w-auto'>
                                 <div>
-                                {post.tags.map((tag, idx) => (
-                                <button
-                                key={`#${tag}-${idx}`}
-                                onClick={() => handleClickFilter(tag)}
-                                className={selectedFilters.includes(tag) ? "active" : ""}
-                              >
-                                {`#${tag}`}
-                              </button>
-                            ))}
+                                    <h1>{post.title}</h1>
+                                    <h2>{Date(post.createdAt.miliseconds)}</h2>
+                                    <p className='mt-3 max-h-32 overflow-scroll'>{post.text}</p>
+                                    {/* <button onClick={deletePost(post.id)}>delete</button> */}
                                 </div>
-                                
-                            {
-                             edit === true && 
-                                <DeletePost id={post.id} imageUrl={post.imageUrl} /> 
-                            }
+                                <div className='flex justify-between border w-auto'>
+                                    <div>
+                                        {post.tags.map((tag, idx) => (
+                                            <button
+                                                key={`#${tag}-${idx}`}
+                                                onClick={() => handleClickFilter(tag)}
+                                                className={selectedFilters.includes(tag) ? "active" : ""}
+                                            >
+                                                {`#${tag}`}
+                                            </button>
+                                        ))}
+                                    </div>
+                                    {
+                                        edit === true &&
+                                        <>
+                                            <DeletePost id={post.id} imageUrl={post.imageUrl} />
+                                            <EditPost id={post.id} imageUrl={post.imageUrl} />
+                                        </>
+
+                                    }
+                                </div>
+
                             </div>
-                            
                         </div>
-                    </div>
-                ))
+                    ))
             }
         </div>
     )
