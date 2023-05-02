@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import DeletePost from './Editing/DeletePost';
-import EditPost from './Editing/EditPost';
+import { Link } from 'react-router-dom';
+// import EditPost from './Editing/EditPost';
 
 const Posts = ({ filteredPosts, handleClickFilter, selectedFilters }) => {
   const [editStates, setEditStates] = useState({});
@@ -31,7 +32,9 @@ const Posts = ({ filteredPosts, handleClickFilter, selectedFilters }) => {
             </div>
             <div className='ml-8 flex flex-col justify-between border w-auto'>
               <div>
-                <h1>{post.title}</h1>
+                <Link to={`./${post.id}`}>
+                    <h1>{post.title}</h1>
+                </Link> 
                 <h2>{Date(post.createdAt.miliseconds)}</h2>
                 <p className='mt-3 max-h-32 overflow-scroll'>{post.text}</p>
               </div>

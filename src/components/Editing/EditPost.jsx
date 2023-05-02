@@ -1,28 +1,4 @@
-// That sounds like a good approach! Creating a separate page for each post using React Router and handling the delete and update functionality there can provide a better user experience and more control over the editing process.
-
-// By using React Router, you can define a route for each post and pass the necessary data as props to the corresponding component. This allows you to have a dedicated page for editing a specific post, where you can implement the delete and update functionality.
-
-// Here's a high-level example of how you can structure your code using React Router:
-
-// Set up your routes in your main App component:
-// jsx
-// Copy code
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Posts from './Posts';
-import PostPage from './PostPage';
-
-const App = () => {
-  return (
-    <Router>
-      <Switch>
-        <Route exact path="/" component={Posts} />
-        <Route path="/post/:postId" component={PostPage} />
-      </Switch>
-    </Router>
-  );
-};
-
-export default App;
+/*
 
 // Modify the Posts component to include a link to the individual post page:
 // jsx
@@ -46,9 +22,9 @@ const Posts = ({ filteredPosts }) => {
 };
 
 export default Posts;
-Create the PostPage component for editing a specific post:
-jsx
-Copy code
+// Create the PostPage component for editing a specific post:
+// jsx
+// Copy code
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
@@ -170,7 +146,7 @@ const PostPage = () => {
 //           >
 //             Save
 //           </button>
-//           {/* <p>{JSON.stringify(post)}</p> */}
+//           { <p>{JSON.stringify(post)}</p> }
 //         </>
 //       ) : (
 //         <button
@@ -185,3 +161,4 @@ const PostPage = () => {
 // };
 
 // export default EditPost;
+*/
