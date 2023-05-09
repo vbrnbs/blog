@@ -6,6 +6,8 @@ import { getDocs, collection, query, orderBy } from "firebase/firestore";
 import { db } from "./firebaseConfig";
 import CreatePost from './Components/Editing/CreatePost';
 import Header from './Components/Header';
+// import Post from './Components/Post';
+
 
 function App() {
   const [postList, setPostList] = useState([]);
@@ -31,6 +33,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Blog data={postList} />} />
           <Route path='/new' element={<CreatePost />} />
+          {/* <Route path='/:id' element={<Post />} />
+          <Route path="*" element={<h1>Not Found</h1>} /> */}
         </Routes>
       </Router>
     </>
