@@ -1,6 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { PostContext } from '../App'
+import { FilteredPostsContext } from './Blog';
 
-const Filter = ({ posts, filteredPosts, setFilteredPosts, selectedFilters, setSelectedFilters, handleClickFilter, setSearchValue }) => {
+const Filter = ({ selectedFilters, setSelectedFilters, handleClickFilter, setSearchValue }) => {
+  const { posts } = useContext(PostContext);
+  const {
+    filteredPosts,
+    setFilteredPosts
+  } = useContext(FilteredPostsContext);
   const [filters, setFilters] = useState([]);
   
 

@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import DeletePost from './Editing/DeletePost';
 import { Link } from 'react-router-dom';
+import { FilteredPostsContext } from './Blog';
 // import EditPost from './Editing/EditPost';
 
-const Posts = ({ filteredPosts, handleClickFilter, selectedFilters }) => {
+const Posts = ({ handleClickFilter, selectedFilters }) => {
   const [editStates, setEditStates] = useState({});
+  const { filteredPosts } = useContext(FilteredPostsContext);
 
   const toggleEdit = (postId) => {
     setEditStates((prevEditStates) => ({

@@ -1,7 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import { PostContext } from '../App'
+import { FilteredPostsContext } from './Blog';
 
-const SearchBar = ({ posts, filteredPosts, setFilteredPosts, setSearchValue, searchValue }) => {
 
+const SearchBar = ({ setSearchValue, searchValue }) => {
+
+  const { posts } = useContext(PostContext);
+  const {
+    filteredPosts,
+    setFilteredPosts
+  } = useContext(FilteredPostsContext);
+  
   const [clicked, setClicked] = useState(false);
 
   const searchKeyword = (e) => {
