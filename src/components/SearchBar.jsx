@@ -1,16 +1,12 @@
 import React, { useState, useContext } from 'react'
-import { PostContext } from '../App'
-import { FilteredPostsContext } from './Blog';
+import { PostContext } from '../hooks/useFetch';
+import { FilteredPostsContext } from '../hooks/useFiltering';
 
 
-const SearchBar = ({ setSearchValue, searchValue }) => {
+const SearchBar = () => {
 
   const { posts } = useContext(PostContext);
-  const {
-    filteredPosts,
-    setFilteredPosts
-  } = useContext(FilteredPostsContext);
-  
+  const { filteredPosts, setFilteredPosts, setSearchValue, searchValue } = useContext(FilteredPostsContext);
   const [clicked, setClicked] = useState(false);
 
   const searchKeyword = (e) => {

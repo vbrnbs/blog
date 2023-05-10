@@ -1,13 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { PostContext } from '../App'
-import { FilteredPostsContext } from './Blog';
+import { PostContext } from '../hooks/useFetch';
+import { FilteredPostsContext } from '../hooks/useFiltering';
 
-const Filter = ({ selectedFilters, setSelectedFilters, handleClickFilter, setSearchValue }) => {
+const Filter = () => {
   const { posts } = useContext(PostContext);
-  const {
-    filteredPosts,
-    setFilteredPosts
-  } = useContext(FilteredPostsContext);
+  const { filteredPosts, setFilteredPosts, selectedFilters, setSelectedFilters, handleClickFilter, setSearchValue } = useContext(FilteredPostsContext);
   const [filters, setFilters] = useState([]);
   
 
@@ -39,7 +36,7 @@ const Filter = ({ selectedFilters, setSelectedFilters, handleClickFilter, setSea
   }
 
   // console.log("filters :>>", filters)
-  // console.log("selected Filters :>>", selectedFilters)
+  console.log("selected Filters :>>", selectedFilters)
 
   return (
     <div className='flex justify-between'>

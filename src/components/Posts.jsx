@@ -1,12 +1,14 @@
 import React, { useState, useContext } from 'react';
 import DeletePost from './Editing/DeletePost';
-import { Link } from 'react-router-dom';
-import { FilteredPostsContext } from './Blog';
 // import EditPost from './Editing/EditPost';
+import SearchBar from './SearchBar';
+import Filter from './Filter';
+import { Link } from 'react-router-dom';
+import { FilteredPostsContext } from '../hooks/useFiltering';
 
-const Posts = ({ handleClickFilter, selectedFilters }) => {
+const Posts = () => {
+  const { filteredPosts, handleClickFilter, selectedFilters } = useContext(FilteredPostsContext);
   const [editStates, setEditStates] = useState({});
-  const { filteredPosts } = useContext(FilteredPostsContext);
 
   const toggleEdit = (postId) => {
     setEditStates((prevEditStates) => ({
@@ -15,10 +17,11 @@ const Posts = ({ handleClickFilter, selectedFilters }) => {
     }));
   };
 
-  
-
   return (
     <div>
+      <SearchBar />
+      <Filter />
+      <hr className='my-5' />
       {!filteredPosts ? (
         <>Loading</>
       ) : (
@@ -35,8 +38,8 @@ const Posts = ({ handleClickFilter, selectedFilters }) => {
             <div className='ml-8 flex flex-col justify-between border w-auto'>
               <div>
                 <Link to={`./${post.id}`}>
-                    <h1>{post.title}</h1>
-                </Link> 
+                  <h1>{post.title}</h1>
+                </Link>
                 <h2>{Date(post.createdAt.miliseconds)}</h2>
                 <p className='mt-3 max-h-32 overflow-scroll'>{post.text}</p>
               </div>

@@ -1,49 +1,48 @@
 import "./App.css";
-import React, { useEffect, useState, createContext } from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import Blog from "./components/Blog";
-import { getDocs, collection, query, orderBy } from "firebase/firestore";
-import { db } from "./firebaseConfig";
+import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import useFetch, { PostContext } from "./hooks/useFetch";
+import useFiltering, { FilteredPostsContext } from "./hooks/useFiltering";
 import CreatePost from './Components/Editing/CreatePost';
 import Header from './Components/Header';
 import Post from "./components/Post";
-// import Post from './Components/Post';
-
-export const PostContext = createContext();
+import Footer from "./components/Footer";
+import Posts from "./components/Posts";
+import Loading from "./components/Loading";
+import Notfound from "./components/NotFound";
 
 function App() {
-  
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const getPosts = async () => {
-      const postsCollectionRef = collection(db, "posts");
-      const q = query(postsCollectionRef, orderBy("createdAt", "desc"));
-      const querySnapshot = await getDocs(q);
-      const data = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-      setPosts(data);
-      setLoading(false);
-    };
+  const { loading, setPosts, posts } = useFetch();
+  const { filteredPosts, setFilteredPosts, searchValue, setSearchValue, selectedFilters, setSelectedFilters, handleClickFilter } = useFiltering(posts);
 
-    getPosts();
-  }, []);
+  if (!posts) {
+    return <div>Sorry, the data blog is not available at the moment. </div>;
+  }
 
   return (
     <>
       <Header />
-      <PostContext.Provider value={{ posts, setPosts }}>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Blog data={posts} />} />
-          <Route path='/new' element={<CreatePost />} />
-          {/* <Route path='/:id' element={<Post />} />
-          <Route path="*" element={<h1>Not Found</h1>} /> */}
-        </Routes>
-      </Router>
-      </PostContext.Provider>
+      {loading ?
+        <Loading />
+        :
+        <PostContext.Provider value={{ posts, setPosts }}>
+          <FilteredPostsContext.Provider value={{ filteredPosts, setFilteredPosts, selectedFilters, setSelectedFilters, handleClickFilter, searchValue, setSearchValue }}>
+            <div className='lg:max-w-7xl container mx-auto'>
+              <Router>
+                <Routes>
+                  <Route path='/' element={<Posts />} />
+                  <Route path='/new' element={<CreatePost />} />
+                  <Route path=':id' element={<Post />} />
+                  <Route path="*" element={<Notfound />} />
+                </Routes>
+              </Router>
+              <Footer />
+            </div>
+          </FilteredPostsContext.Provider>
+        </PostContext.Provider>
+      }
     </>
-    
+
   );
 }
 
