@@ -1,6 +1,4 @@
 import React, { useState, useContext } from 'react';
-import DeletePost from './Editing/DeletePost';
-// import EditPost from './Editing/EditPost';
 import SearchBar from './SearchBar';
 import Filter from './Filter';
 import { Link } from 'react-router-dom';
@@ -8,14 +6,6 @@ import { FilteredPostsContext } from '../hooks/useFiltering';
 
 const Posts = () => {
   const { filteredPosts, handleClickFilter, selectedFilters } = useContext(FilteredPostsContext);
-  const [editStates, setEditStates] = useState({});
-
-  const toggleEdit = (postId) => {
-    setEditStates((prevEditStates) => ({
-      ...prevEditStates,
-      [postId]: !prevEditStates[postId]
-    }));
-  };
 
   return (
     <div>
@@ -55,23 +45,6 @@ const Posts = () => {
                     </button>
                   ))}
                 </div>
-                {editStates[post.id] ? (
-                  <>
-                    <DeletePost id={post.id} imageUrl={post.imageUrl} />
-                    {/* <EditPost
-                      key={post.id}
-                      post={post}
-                      imageUrl={post.imageUrl}
-                    /> */}
-                  </>
-                ) : (
-                  <button
-                    className='bg-yellow-500 hover:bg-yellow-600 font-bold py-2 px-4 rounded'
-                    onClick={() => toggleEdit(post.id)}
-                  >
-                    Edit
-                  </button>
-                )}
               </div>
             </div>
           </div>

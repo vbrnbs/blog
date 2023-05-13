@@ -1,13 +1,15 @@
-import { Timestamp, collection, addDoc, setDoc, doc } from 'firebase/firestore';
+import { Timestamp, collection, addDoc } from 'firebase/firestore';
 import React, { useState } from 'react';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { storage, db } from '../../firebaseConfig';
+import { useNavigate, Link } from 'react-router-dom';
 
 // https://github.com/vbrnbs/100DaysOfCode/blob/main/%2306-BlogWithFIleUpload/blog-fileupload/src/components/AddArticle.jsx
 
 const CreatePost = () => {
 
   const [progress, setProgress] = useState(0);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     title: "",
     text: "",
@@ -73,7 +75,7 @@ const CreatePost = () => {
             })
               .then(() => {
                 setProgress(0)
-                window.location.reload()
+                navigate('/');
               })
               .catch(err => {
               })
@@ -99,8 +101,13 @@ const CreatePost = () => {
           <button type="submit">Create Post</button>
         </form>
       </div> */}
+      <div className="my-4">
+        <Link to={-1} className="my-32">
+          back
+        </Link>
+      </div>
       <div className='flex flex-col border rounded-sm p-3 mt-3 bg-light' >
-        <h2 className='mb-6'>Create Article</h2>
+        <h2 className='mb-6'>Publish Post</h2>
         {/* title */}
         <label htmlFor=''>Title</label>
         <input type="text" name="title" value={formData.title} className="form-control" onChange={(e) => handleChange(e)} />

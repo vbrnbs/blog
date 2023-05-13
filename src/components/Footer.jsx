@@ -1,5 +1,6 @@
 import React from 'react'
 import Icons from './Icons'
+import Loading from './Loading'
 
 const Footer = () => {
     return (

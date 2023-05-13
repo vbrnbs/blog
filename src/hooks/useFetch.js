@@ -19,7 +19,6 @@ export default function useFetch() {
             setPosts(data);
             setLoading(false);
         };
-
         getPosts();
     }, []);
 

@@ -1,164 +1,148 @@
-/*
+import React, { useState } from 'react'
+import { Timestamp, collection, setDoc } from 'firebase/firestore';
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import { storage, db } from '../../firebaseConfig';
+import { useNavigate, Link } from 'react-router-dom';
 
-// Modify the Posts component to include a link to the individual post page:
-// jsx
-// Copy code
+const EditPost = ({ post, editStates, setEditStates }) => {
+  const [progress, setProgress] = useState(0);
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    title: post.title,
+    text: post.text,
+    tags: post.tags,
+    imageUrl: "",
+    createdAt: Timestamp.now().toDate(),
+    git: post.git,
+    url: post.url
+  });
 
-import { Link } from 'react-router-dom';
-
-const Posts = ({ filteredPosts }) => {
-  // Render each post
-  const renderPosts = () => {
-    return filteredPosts.map((post) => (
-      <div key={post.id}>
-        <h1>{post.title}</h1>
-        <p>{post.text}</p>
-        <Link to={`/post/${post.id}`}>View Post</Link>
-      </div>
-    ));
-  };
-
-  return <div>{renderPosts()}</div>;
-};
-
-export default Posts;
-// Create the PostPage component for editing a specific post:
-// jsx
-// Copy code
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
-import { db } from '../../firebaseConfig';
-
-const PostPage = () => {
-  const { postId } = useParams();
-  const [post, setPost] = useState(null);
-  const [title, setTitle] = useState('');
-  const [text, setText] = useState('');
-
-  // Fetch the post data on component mount
-  useEffect(() => {
-    const fetchPost = async () => {
-      try {
-        const docRef = doc(db, 'posts', postId);
-        const snapshot = await getDoc(docRef);
-        if (snapshot.exists()) {
-          setPost(snapshot.data());
-          setTitle(snapshot.data().title);
-          setText(snapshot.data().text);
-        }
-      } catch (error) {
-        console.error('Error fetching post:', error);
-      }
-    };
-
-    fetchPost();
-  }, [postId]);
-
-  // Handle update post
-  const handleUpdate = async () => {
-    try {
-      const docRef = doc(db, 'posts', postId);
-      await updateDoc(docRef, {
-        title: title,
-        text: text,
-      });
-      console.log('Post updated successfully!');
-    } catch (error) {
-      console.error('Error updating post:', error);
-    }
-  };
-
-  // Handle delete post
-  const handleDelete = async () => {
-    try {
-      const docRef = doc(db, 'posts', postId);
-      await deleteDoc(docRef);
-      console.log('Post deleted successfully!');
-    } catch (error) {
-      console.error('Error deleting post:', error);
-    }
-  };
-
-  if (!post) {
-    return <div>Loading...</div>;
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   }
+
+  const handleImageChange = (e) => {
+    setFormData({ ...formData, image: e.target.files[0] });
+  }
+
+  const handleTagsChange = (e) => {
+    setFormData({
+      ...formData, tags: e.target.value.toLowerCase().split(", ")
+    })
+  }
+
+  const handlePublish = () => {
+
+    const storageRef = ref(storage, `/images/${Date.now()}${formData.image.name}`);
+    const uploadImage = uploadBytesResumable(storageRef, formData.image)
+
+    uploadImage.on("state_changed",
+      (snapshot) => {
+        const progressPercent = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100)
+        setProgress(progressPercent);
+      },
+      (err) => {
+        console.log(err)
+      },
+      () => {
+        setFormData({
+          title: "",
+          text: "",
+          image: "",
+          tags: "",
+          git: "",
+          url: ""
+        });
+        getDownloadURL(uploadImage.snapshot.ref)
+          .then((url) => {
+            const articleRef = collection(db, "posts");
+            setDoc(post.id, {
+              title: formData.title,
+              text: formData.text,
+              imageUrl: url,
+              createdAt: Timestamp.now().toDate(),
+              tags: formData.tags,
+              git: formData.git,
+              url: formData.url
+            })
+              .then(() => {
+                setProgress(0)
+                navigate('/');
+              })
+              .catch(err => {
+              })
+          })
+      }
+    )
+  }
+
+  console.log("posts", formData)
+
+
 
   return (
     <div>
-      <h1>{post.title}</h1>
-      <p>{post.text}</p>
-      <input type="text" value={title
+      <div className='mt-12 mb-24 '>
+        {/* <div className='mt-12 mb-24 '>
+        <h2>Create Blog Post</h2>
+        <form onSubmit={handleNewPost} className=' '>
+          <label htmlFor="title"></label>
+          <input type="text" placeholder='Title' id="title" name="title" value={title} onChange={e => setTitle(e.target.value)} />
 
+          <label htmlFor="text"></label>
+          <textarea id="text" placeholder='Text' name="text" value={text} onChange={e => setText(e.target.value)} />
 
+          <label htmlFor="tags"></label>
+          <input type="text" id="tags" placeholder='Tags' name="tags" value={tags} onChange={e => setTags(e.target.value.split(','))} />
 
+          <button type="submit">Create Post</button>
+        </form>
+      </div> */}
+        <div className="my-4">
+          <Link to={-1} className="my-32">
+            back
+          </Link>
+        </div>
+        <div className='flex flex-col border rounded-sm p-3 mt-3 bg-light' >
+          <h2 className='mb-6'>Publish Post</h2>
+          {/* title */}
+          <label htmlFor=''>Title</label>
+          <input type="text" name="title" value={formData.title} className="form-control" onChange={(e) => handleChange(e)} />
 
-// import React, { useState } from 'react';
-// import { db } from "../../firebaseConfig";
-// import { doc, setDoc } from "firebase/firestore";
+          {/* text */}
+          <label htmlFor=''>Text</label>
+          <textarea name="text" value={formData.text} className="form-control h-24" onChange={(e) => handleChange(e)} />
 
-// const EditPost = ({ post }) => {
-//   console.log(post.title);
-//   const [title, setTitle] = useState(post.title);
-//   const [text, setText] = useState(post.text);
-//   const [isEditing, setIsEditing] = useState(false);
+          {/* image */}
+          <label>Image</label>
+          <input type="file" name='image' accept='image/*' className="form-control" onChange={(e) => handleImageChange(e)} />
 
-//   const handleEdit = () => {
-//     setIsEditing(true);
-//   };
+          {/* tags */}
+          <label>Tags</label>
+          <input type="string" name='tags' className="form-control" onChange={(e) => handleTagsChange(e)} />
 
-//   const handleSave = async () => {
-//     setDoc(doc(db, "posts", post.id), {
-//       title: title,
-//       text: text,
-//     });
+          {/* git */}
+          <label>Git Url</label>
+          <input type="url" name='git' className="form-control" onChange={(e) => handleChange(e)} />
 
-//     setIsEditing(false);
-//   };
+          {/* git */}
+          <label>Live Url</label>
+          <input type="url" name='live' className="form-control" onChange={(e) => handleChange(e)} />
 
-//   return (
-//     <div>
-//       {isEditing ? (
-//         <>
-//           <input
-//             type="text"
-//             onChange={(e) => {
-//               console.log('New title:', e.target.value);
-//               setTitle(e.target.value);
-//             }}
-//             value={title}
-//             placeholder={post.title}
-//           />
+          {/* progress */}
+          {progress === 0 ? null : (
+            <div className="form-control my-4 ">
+              <div className="rounded my-2 h-2 bg-yellow-400" style={{ width: `${progress}%` }}>
+              </div>
+              <p>{`uploading image ${progress}%`}</p>
+            </div>
+          )}
+          <button className='mt-2 w-36' onClick={handlePublish}>Publish</button>
+        </div>
+      </div >
+    </div>
+  )
+}
 
-//           <textarea
-//             type="text"
-//             onChange={(e) => {
-//               console.log('New text:', e.target.value);
-//               setText(e.target.value);
-//             }}
-//             value={text}
-//             placeholder={post.text}
-//           />
-
-//           <button
-//             className='bg-green-500 hover:bg-green-600 font-bold py-2 px-4 rounded'
-//             onClick={handleSave}
-//           >
-//             Save
-//           </button>
-//           { <p>{JSON.stringify(post)}</p> }
-//         </>
-//       ) : (
-//         <button
-//           className='bg-yellow-500 hover:bg-yellow-600 font-bold py-2 px-4 rounded'
-//           onClick={handleEdit}
-//         >
-//           Edit
-//         </button>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default EditPost;
-*/
+export default EditPost
