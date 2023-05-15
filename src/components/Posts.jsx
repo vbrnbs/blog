@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import SearchBar from './SearchBar';
 import Filter from './Filter';
 import { Link } from 'react-router-dom';
-import { FilteredPostsContext } from '../hooks/useFiltering';
+import { FilteredPostsContext } from '../utils/useFiltering';
 
 const Posts = () => {
   const { filteredPosts, handleClickFilter, selectedFilters } = useContext(FilteredPostsContext);
@@ -30,7 +30,11 @@ const Posts = () => {
                 <Link to={`./${post.id}`}>
                   <h1>{post.title}</h1>
                 </Link>
-                <h2>{Date(post.createdAt.miliseconds)}</h2>
+                { post.date ?
+                  (<p>{post.date}</p>)
+                  :
+                  (<p> {new Date(post.createdAt.seconds * 1000).toLocaleDateString("en-US")}</p>)
+                }   
                 <p className='mt-3 max-h-32 overflow-scroll'>{post.text}</p>
               </div>
               <div className='flex justify-between border w-auto'>

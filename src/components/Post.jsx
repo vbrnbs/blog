@@ -1,9 +1,9 @@
 import { Link, useParams } from "react-router-dom";
-import { FilteredPostsContext } from "../hooks/useFiltering";
+import { FilteredPostsContext } from "../utils/useFiltering";
 import { useContext, useEffect, useState } from "react";
 import DeletePost from './Editing/DeletePost';
 import EditPost from './Editing/EditPost';
-import useFetch from "../hooks/useFetch";
+import useFetch from "../utils/useFetch";
 import Loading from "./Loading";
 
 const Post = () => {
@@ -29,7 +29,7 @@ const Post = () => {
 
   const toggleEdit = () => {
     setEditStates(!editStates)
-   };    
+  };
 
   if (loading || !post) {
     return <Loading />;
@@ -38,13 +38,17 @@ const Post = () => {
 
   return (
     <div>
-      <div className="my-4">
-        <Link to={-1}>
-          back
+      <div className="mt-4 mb-16">
+        <Link to={-1} className="text-4xl">
+          ⬅️
         </Link>
       </div>
       <h1>{post.title}</h1>
-      {new Date(post.createdAt.seconds * 1000).toLocaleDateString("en-US")}
+      {post.date ?
+        (<p>{post.date}</p>)
+        :
+        (<p> {new Date(post.createdAt.seconds * 1000).toLocaleDateString("en-US")}</p>)
+      }
       <div className="flex justify-center items-center">
         <img
           className='w-img rounded-sm drop-shadow-sm object-cover'

@@ -1,7 +1,7 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import useFetch, { PostContext } from "./hooks/useFetch";
-import useFiltering, { FilteredPostsContext } from "./hooks/useFiltering";
+import useFetch, { PostContext } from "./utils/useFetch";
+import useFiltering, { FilteredPostsContext } from "./utils/useFiltering";
 import CreatePost from './components/Editing/CreatePost';
 import Post from "./components/Post";
 import Footer from "./components/Footer";

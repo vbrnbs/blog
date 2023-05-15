@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { PostContext } from '../hooks/useFetch';
-import { FilteredPostsContext } from '../hooks/useFiltering';
+import { PostContext } from '../utils/useFetch';
+import { FilteredPostsContext } from '../utils/useFiltering';
 
 const Filter = () => {
   const { posts } = useContext(PostContext);

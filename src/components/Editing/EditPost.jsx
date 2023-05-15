@@ -1,18 +1,19 @@
 import React, { useState } from 'react'
-import { Timestamp, collection, setDoc } from 'firebase/firestore';
+import { Timestamp, collection, setDoc, doc } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { storage, db } from '../../firebaseConfig';
 import { useNavigate, Link } from 'react-router-dom';
 
-const EditPost = ({ post, editStates, setEditStates }) => {
+const EditPost = ({ post }) => {
   const [progress, setProgress] = useState(0);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     title: post.title,
     text: post.text,
-    tags: post.tags,
-    imageUrl: "",
-    createdAt: Timestamp.now().toDate(),
+    date: post.date,
+    tags: post.tags.join(", "),
+    imageUrl: post.imageUrl,
+    createdAt: post.createdAt,
     git: post.git,
     url: post.url
   });
@@ -27,40 +28,33 @@ const EditPost = ({ post, editStates, setEditStates }) => {
 
   const handleTagsChange = (e) => {
     setFormData({
-      ...formData, tags: e.target.value.toLowerCase().split(", ")
+      ...formData, tags: e.target.value.toLowerCase().split(",")
     })
   }
 
   const handlePublish = () => {
 
-    const storageRef = ref(storage, `/images/${Date.now()}${formData.image.name}`);
-    const uploadImage = uploadBytesResumable(storageRef, formData.image)
+    // const storageRef = ref(storage, `/images/${Date.now()}${formData.image.name}`);
+    // const uploadImage = uploadBytesResumable(storageRef, formData.image)
 
-    uploadImage.on("state_changed",
-      (snapshot) => {
-        const progressPercent = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100)
-        setProgress(progressPercent);
-      },
-      (err) => {
-        console.log(err)
-      },
-      () => {
-        setFormData({
-          title: "",
-          text: "",
-          image: "",
-          tags: "",
-          git: "",
-          url: ""
-        });
-        getDownloadURL(uploadImage.snapshot.ref)
-          .then((url) => {
-            const articleRef = collection(db, "posts");
-            setDoc(post.id, {
+    // uploadImage.on("state_changed",
+    //   (snapshot) => {
+    //     const progressPercent = Math.round(
+    //       (snapshot.bytesTransferred / snapshot.totalBytes) * 100)
+    //     setProgress(progressPercent);
+    //   },
+    //   (err) => {
+    //     console.log(err)
+    //   },
+    //   () => {
+    //     getDownloadURL(uploadImage.snapshot.ref)
+    //       .then((url) => {
+            const docRef = doc(db, "posts", post.id);
+            setDoc(docRef, {
               title: formData.title,
               text: formData.text,
-              imageUrl: url,
+              date: formData.date,
+              imageUrl: formData.imageUrl,
               createdAt: Timestamp.now().toDate(),
               tags: formData.tags,
               git: formData.git,
@@ -72,13 +66,14 @@ const EditPost = ({ post, editStates, setEditStates }) => {
               })
               .catch(err => {
               })
-          })
-      }
-    )
-  }
+          }
+          //)
+    //    }
+    //  )
+  //}
 
   console.log("posts", formData)
-
+  console.log(post.tags.join(","))
 
 
   return (
@@ -99,17 +94,14 @@ const EditPost = ({ post, editStates, setEditStates }) => {
           <button type="submit">Create Post</button>
         </form>
       </div> */}
-        <div className="my-4">
-          <Link to={-1} className="my-32">
-            back
-          </Link>
-        </div>
         <div className='flex flex-col border rounded-sm p-3 mt-3 bg-light' >
           <h2 className='mb-6'>Publish Post</h2>
           {/* title */}
           <label htmlFor=''>Title</label>
           <input type="text" name="title" value={formData.title} className="form-control" onChange={(e) => handleChange(e)} />
-
+          {/* date */}
+          <label for="date">New Date?</label>
+          <input type="text" name="date" value={formData.date} className="form-control" onChange={(e) => handleChange(e)} />
           {/* text */}
           <label htmlFor=''>Text</label>
           <textarea name="text" value={formData.text} className="form-control h-24" onChange={(e) => handleChange(e)} />
@@ -120,15 +112,15 @@ const EditPost = ({ post, editStates, setEditStates }) => {
 
           {/* tags */}
           <label>Tags</label>
-          <input type="string" name='tags' className="form-control" onChange={(e) => handleTagsChange(e)} />
+          <input type="text" name='tags' value={formData.tags} className="form-control" onChange={(e) => handleTagsChange(e)} />
 
           {/* git */}
           <label>Git Url</label>
-          <input type="url" name='git' className="form-control" onChange={(e) => handleChange(e)} />
+          <input type="url" name='git' value={formData.git} className="form-control" onChange={(e) => handleChange(e)} />
 
           {/* git */}
           <label>Live Url</label>
-          <input type="url" name='live' className="form-control" onChange={(e) => handleChange(e)} />
+          <input type="url" name='url' value={formData.url}  className="form-control" onChange={(e) => handleChange(e)} />
 
           {/* progress */}
           {progress === 0 ? null : (

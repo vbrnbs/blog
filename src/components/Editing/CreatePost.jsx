@@ -19,6 +19,7 @@ const CreatePost = () => {
     git: "",
     url: ""
   });
+  
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
