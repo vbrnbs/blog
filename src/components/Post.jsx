@@ -5,6 +5,7 @@ import DeletePost from './Editing/DeletePost';
 import EditPost from './Editing/EditPost';
 import useFetch from "../utils/useFetch";
 import Loading from "./Loading";
+import { AuthContext } from "./Login";
 
 const Post = () => {
   const { id } = useParams();
@@ -12,7 +13,7 @@ const Post = () => {
   const { filteredPosts, setSelectedFilters } = useContext(FilteredPostsContext);
   const [post, setPost] = useState(null);
   const [editStates, setEditStates] = useState(false);
-  const isAuth = true;
+  const isAuth = useContext(AuthContext);
 
   useEffect(() => {
     const checkSource = () => {
@@ -34,6 +35,7 @@ const Post = () => {
   if (loading || !post) {
     return <Loading />;
   }
+  console.log('auth', isAuth)
 
 
   return (
@@ -72,7 +74,7 @@ const Post = () => {
           </Link>
         ))}
       </div>
-      {isAuth &&
+      {isAuth === true &&
         <div className="flex mt-2">
           <DeletePost id={post.id} imageUrl={post.imageUrl} />
           {/* <EditPost

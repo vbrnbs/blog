@@ -36,7 +36,7 @@ const Filter = () => {
   }
 
   // console.log("filters :>>", filters)
-  console.log("selected Filters :>>", selectedFilters)
+  // console.log("selected Filters :>>", selectedFilters)
 
   return (
     <div className='flex justify-between'>
