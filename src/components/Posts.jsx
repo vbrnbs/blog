@@ -3,14 +3,12 @@ import SearchBar from './SearchBar';
 import Filter from './Filter';
 import { Link } from 'react-router-dom';
 import { FilteredPostsContext } from '../utils/useFiltering';
-import Login from './Login';
 
 const Posts = () => {
   const { filteredPosts, handleClickFilter, selectedFilters } = useContext(FilteredPostsContext);
 
   return (
     <div>
-      <Login />
       <SearchBar />
       <Filter />
       <hr className='my-5' />
