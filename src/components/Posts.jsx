@@ -1,16 +1,20 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import SearchBar from './SearchBar';
 import Filter from './Filter';
+import FilteredPosts from './FilteredPosts';
 import { Link } from 'react-router-dom';
 import { FilteredPostsContext } from '../utils/useFiltering';
 
 const Posts = () => {
   const { filteredPosts, handleClickFilter, selectedFilters } = useContext(FilteredPostsContext);
-
+  console.log('selectedFilters', selectedFilters);
+  console.log('filteredPosts', filteredPosts);
+  
   return (
     <div>
       <SearchBar />
-      <Filter />
+      {/* <Filter /> */}
+      <FilteredPosts />
       <hr className='my-5' />
       {!filteredPosts ? (
         <>Loading</>
@@ -40,6 +44,20 @@ const Posts = () => {
               <div className='flex justify-between border w-auto'>
                 <div>
                   {post.tags.map((tag, idx) => (
+                    <button
+                      key={`#${tag}-${idx}`}
+                      onClick={() => handleClickFilter(tag)}
+                      className={selectedFilters.includes(tag) ? 'active' : ''}
+                    >
+                      {`#${tag}`}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className='flex justify-between border w-auto'>
+                <div>
+                  {post.topics &&
+                  post.topics.map((tag, idx) => (
                     <button
                       key={`#${tag}-${idx}`}
                       onClick={() => handleClickFilter(tag)}

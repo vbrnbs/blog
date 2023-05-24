@@ -13,8 +13,11 @@ const Header = () => {
   return (
     <div className='py-3 px-4 flex justify-between'>
       <div>
-        <Link to='/'>
+        <Link to='/' reloadDocument>
           <h1 className="windsor text-2xl font-semibold">brnbs</h1>
+        </Link>
+        <Link to='/' >
+          <h1 className="windsor font-semibold">reload</h1>
         </Link>
       </div>
       <div className='flex'>
