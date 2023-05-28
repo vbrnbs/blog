@@ -22,6 +22,8 @@ const CreatePost = () => {
     url: ""
   });
 
+  console.log(user.user)
+
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -104,7 +106,7 @@ const CreatePost = () => {
           <button type="submit">Create Post</button>
         </form>
       </div> */}
-      {user.user && user.user.length > 0 && (
+      {user.user && (
         <div className='flex flex-col border rounded-sm p-3 mt-3 bg-light' >
           <div className="my-4">
             <Link to={-1} className="my-32">

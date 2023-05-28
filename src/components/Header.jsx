@@ -25,6 +25,9 @@ const Header = () => {
         {user.user ?
           <div className='text-sm items-center flex justify-center align-middle'>
             <p className='mr-2 cursor-pointer' onClick={toggleLogin} >{user._tokenResponse.email}</p>
+            <Link to={"/new"}>
+              <h1>💥</h1>
+            </Link>
             <Icons />
           </div>
           :
