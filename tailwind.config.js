@@ -8,8 +8,6 @@ module.exports = {
         bgSecondary: "",
         textPrimary: "",
         textSecondary: "",
-        react: "#2E69DB",
-        gsap: "#57A818",
         // add more colors here
       },
     },

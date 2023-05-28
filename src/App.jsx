@@ -7,10 +7,10 @@ import CreatePost from './components/Editing/CreatePost';
 import Post from "./components/Post";
 import Footer from "./components/Footer";
 import Posts from "./components/Posts";
-import Loading from "./components/Loading";
-import Notfound from "./components/NotFound";
+import Notfound from "./components/ui/NotFound";
 import Header from "./components/Header";
-import Login from './components/Login';
+import Loading from "./components/ui/Loading";
+import Login from './components/ui/Login';
 
 
 function App() {

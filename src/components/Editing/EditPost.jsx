@@ -12,6 +12,7 @@ const EditPost = ({ post }) => {
     text: post.text,
     date: post.date,
     tags: post.tags.join(", "),
+    topics: post.topics.join(", "),
     imageUrl: post.imageUrl,
     createdAt: post.createdAt,
     git: post.git,
@@ -28,7 +29,7 @@ const EditPost = ({ post }) => {
 
   const handleTagsChange = (e) => {
     setFormData({
-      ...formData, tags: e.target.value.toLowerCase().split(",")
+      ...formData, [e.target.name]: e.target.value.toLowerCase().split(",")
     })
   }
 
@@ -57,6 +58,7 @@ const EditPost = ({ post }) => {
               imageUrl: formData.imageUrl,
               createdAt: Timestamp.now().toDate(),
               tags: formData.tags,
+              topics: formData.topics,
               git: formData.git,
               url: formData.url
             })
@@ -113,6 +115,10 @@ const EditPost = ({ post }) => {
           {/* tags */}
           <label>Tags</label>
           <input type="text" name='tags' value={formData.tags} className="form-control" onChange={(e) => handleTagsChange(e)} />
+           
+           {/* topics */}
+           <label>Topics</label>
+          <input type="text" name='topics' value={formData.topics} className="form-control" onChange={(e) => handleTagsChange(e)} />
 
           {/* git */}
           <label>Git Url</label>

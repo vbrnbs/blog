@@ -1,14 +1,16 @@
 import { Timestamp, collection, addDoc } from 'firebase/firestore';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { storage, db } from '../../firebaseConfig';
 import { useNavigate, Link } from 'react-router-dom';
+import { AuthContext } from '../../utils/useAuth';
 
 // https://github.com/vbrnbs/100DaysOfCode/blob/main/%2306-BlogWithFIleUpload/blog-fileupload/src/components/AddArticle.jsx
 
 const CreatePost = () => {
 
   const [progress, setProgress] = useState(0);
+  const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     title: "",
@@ -19,7 +21,7 @@ const CreatePost = () => {
     git: "",
     url: ""
   });
-  
+
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -102,47 +104,51 @@ const CreatePost = () => {
           <button type="submit">Create Post</button>
         </form>
       </div> */}
-      <div className="my-4">
-        <Link to={-1} className="my-32">
-          back
-        </Link>
-      </div>
-      <div className='flex flex-col border rounded-sm p-3 mt-3 bg-light' >
-        <h2 className='mb-6'>Publish Post</h2>
-        {/* title */}
-        <label htmlFor=''>Title</label>
-        <input type="text" name="title" value={formData.title} className="form-control" onChange={(e) => handleChange(e)} />
-
-        {/* text */}
-        <label htmlFor=''>Text</label>
-        <textarea name="text" value={formData.text} className="form-control h-24" onChange={(e) => handleChange(e)} />
-
-        {/* image */}
-        <label>Image</label>
-        <input type="file" name='image' accept='image/*' className="form-control" onChange={(e) => handleImageChange(e)} />
-
-        {/* tags */}
-        <label>Tags</label>
-        <input type="string" name='tags' className="form-control" onChange={(e) => handleTagsChange(e)} />
-
-        {/* git */}
-        <label>Git Url</label>
-        <input type="url" name='git' className="form-control" onChange={(e) => handleChange(e)} />
-
-        {/* git */}
-        <label>Live Url</label>
-        <input type="url" name='live' className="form-control"  onChange={(e) => handleChange(e)} />
-
-        {/* progress */}
-        {progress === 0 ? null : (
-          <div className="form-control my-4 ">
-            <div className="rounded my-2 h-2 bg-yellow-400" style={{ width: `${progress}%` }}>
-            </div>
-            <p>{`uploading image ${progress}%`}</p>
+      {user.user && user.user.length > 0 && (
+        <div className='flex flex-col border rounded-sm p-3 mt-3 bg-light' >
+          <div className="my-4">
+            <Link to={-1} className="my-32">
+              back
+            </Link>
           </div>
-        )}
-        <button className='mt-2 w-36' onClick={handlePublish}>Publish</button>
-      </div>
+          <div className='flex flex-col border rounded-sm p-3 mt-3 bg-light' >
+            <h2 className='mb-6'>Publish Post</h2>
+            {/* title */}
+            <label htmlFor=''>Title</label>
+            <input type="text" name="title" value={formData.title} className="form-control" onChange={(e) => handleChange(e)} />
+
+            {/* text */}
+            <label htmlFor=''>Text</label>
+            <textarea name="text" value={formData.text} className="form-control h-24" onChange={(e) => handleChange(e)} />
+
+            {/* image */}
+            <label>Image</label>
+            <input type="file" name='image' accept='image/*' className="form-control" onChange={(e) => handleImageChange(e)} />
+
+            {/* tags */}
+            <label>Tags</label>
+            <input type="string" name='tags' className="form-control" onChange={(e) => handleTagsChange(e)} />
+
+            {/* git */}
+            <label>Git Url</label>
+            <input type="url" name='git' className="form-control" onChange={(e) => handleChange(e)} />
+
+            {/* git */}
+            <label>Live Url</label>
+            <input type="url" name='live' className="form-control" onChange={(e) => handleChange(e)} />
+
+            {/* progress */}
+            {progress === 0 ? null : (
+              <div className="form-control my-4 ">
+                <div className="rounded my-2 h-2 bg-yellow-400" style={{ width: `${progress}%` }}>
+                </div>
+                <p>{`uploading image ${progress}%`}</p>
+              </div>
+            )}
+            <button className='mt-2 w-36' onClick={handlePublish}>Publish</button>
+          </div>
+        </div>
+      )}
     </div >
   );
 };

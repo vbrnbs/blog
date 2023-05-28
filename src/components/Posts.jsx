@@ -1,28 +1,26 @@
 import React, { useContext } from 'react';
-import SearchBar from './SearchBar';
-import Filter from './Filter';
-import FilteredPosts from './FilteredPosts';
-import { Link } from 'react-router-dom';
+
 import { FilteredPostsContext } from '../utils/useFiltering';
+import FilterBar from './FitlerBar';
 
 const Posts = () => {
   const { filteredPosts, handleClickFilter, selectedFilters } = useContext(FilteredPostsContext);
-  console.log('selectedFilters', selectedFilters);
-  console.log('filteredPosts', filteredPosts);
+  // console.log('selectedFilters', selectedFilters);
+  // console.log('filteredPosts', filteredPosts);
   
   return (
     <div>
-      <SearchBar />
+      {/* <SearchBar /> */}
       {/* <Filter /> */}
-      <FilteredPosts />
-      <hr className='my-5' />
+      <FilterBar />
+      {/* <hr className='my-5' />
       {!filteredPosts ? (
         <>Loading</>
       ) : (
         filteredPosts.map((post) => (
           <div key={post.id} className='flex my-24 border border w-auto'>
             <div>
-              {/* 405x205 from 2026/1024 mac*/}
+              // {405x205 from 2026/1024 mac}
               <img
                 className='w-img rounded-sm drop-shadow-sm object-cover'
                 src={post.imageUrl}
@@ -44,8 +42,14 @@ const Posts = () => {
               <div className='flex justify-between border w-auto'>
                 <div>
                   {post.tags.map((tag, idx) => (
+                  //   <FilterButtons
+                  //   filterType="tags"
+                  //   freq={freq(filterPosts, "tags")}
+                  //   onClick={handleFilterButtonClick}
+                  // />
                     <button
                       key={`#${tag}-${idx}`}
+                      filterType="tags"
                       onClick={() => handleClickFilter(tag)}
                       className={selectedFilters.includes(tag) ? 'active' : ''}
                     >
@@ -60,6 +64,7 @@ const Posts = () => {
                   post.topics.map((tag, idx) => (
                     <button
                       key={`#${tag}-${idx}`}
+                      filterType="topics"
                       onClick={() => handleClickFilter(tag)}
                       className={selectedFilters.includes(tag) ? 'active' : ''}
                     >
@@ -71,7 +76,7 @@ const Posts = () => {
             </div>
           </div>
         ))
-      )}
+      )} */}
     </div>
   );
 };

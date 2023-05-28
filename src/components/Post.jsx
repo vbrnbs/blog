@@ -4,13 +4,13 @@ import { useContext, useEffect, useReducer, useState } from "react";
 import DeletePost from './Editing/DeletePost';
 import EditPost from './Editing/EditPost';
 import useFetch from "../utils/useFetch";
-import Loading from "./Loading";
+import Loading from "./ui/Loading";
 import { AuthContext } from "../utils/useAuth";
 
 const Post = () => {
   const { id } = useParams();
   const { loading, posts } = useFetch();
-  const { filteredPosts, setSelectedFilters } = useContext(FilteredPostsContext);
+  const { filteredPosts, selectedFilters, setSelectedFilters } = useContext(FilteredPostsContext);
   const [post, setPost] = useState(null);
   const [editStates, setEditStates] = useState(false);
   const { user } = useContext(AuthContext);
@@ -40,8 +40,8 @@ const Post = () => {
   return (
     <div>
       <div className="mt-4 mb-16">
-        <Link to={-1} className="text-4xl">
-          ⬅️
+        <Link to={-1} className="text-xl hover:underline">
+          ⬅back
         </Link>
       </div>
       <h1>{post.title}</h1>
@@ -61,7 +61,7 @@ const Post = () => {
       <div className="mt-4">
         {post.tags.map((tag, idx) => (
           <Link
-            to="/"
+            to={`/?tags=${tag}`}
             key={`#${tag}-${idx}`}
           >
             <button
@@ -72,6 +72,26 @@ const Post = () => {
             </button>
           </Link>
         ))}
+      </div>
+      <div className="">
+      {post.topics &&
+                    post.topics.map((tag, idx) => {
+                      const withoutSpace = tag.replace(/\s/g, '');
+                      return (
+                        <Link
+                          key={`#${tag}-${idx}`}
+                          to={`/?topics=${tag}`}
+                        >
+                          <button
+                            filtertype="topics"
+                            filtervalue={tag}
+                            className={`${withoutSpace}${selectedFilters.includes(tag) ? ' active' : ''}`}
+                          >
+                            {`#${tag}`}
+                          </button>
+                        </Link>
+                      );
+                    })}
       </div>
       {user.user &&
         <div className="flex mt-2">

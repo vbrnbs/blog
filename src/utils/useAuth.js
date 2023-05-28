@@ -23,12 +23,15 @@ export default function useAuth() {
                 loginEmail,
                 loginPassword
             );
-            console.log(user);
             setUser(user);
         } catch (error) {
             console.log(error.message);
+            setIsAuth("something went wrong :/ ");
         }
+        
     };
+
+
     const logout = async () => {
         await signOut(auth);
         setLoginVisible(false);
