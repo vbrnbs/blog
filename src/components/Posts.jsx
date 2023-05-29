@@ -9,7 +9,7 @@ const Posts = () => {
   // console.log('filteredPosts', filteredPosts);
   
   return (
-    <div>
+    <div className='px-4'>
       {/* <SearchBar /> */}
       {/* <Filter /> */}
       <FilterBar />
