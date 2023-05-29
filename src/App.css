@@ -1,5 +1,6 @@
 body {
   background-color: #f8f8f8 !important;
+
 }
 
 .windsor {
@@ -10,21 +11,29 @@ li {
   margin-right: 0.3rem;
 }
 
+.w-img {
+  max-width: 405px;
+}
+
 input,
 textarea {
   background: #ffffff;
   border: 1px solid #000000;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 4px;
-  padding: 0.25rem 0.5rem 0.25rem 0.5rem;
+  padding: 0.5rem !important;
   margin-bottom: 0.5rem !important;
   width: 600px;
   font-size: 0.75rem !important;
+  /* whitespace-nowrap overflow-hidden overflow-ellipsis */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-button {
+button, .button {
   font-family: "Fraunces", serif !important;
-  padding: 0 2rem 0 2rem;
+  padding: 0 2rem 0 2rem !important;
   font-weight: 460;
   font-size: x-large;
   background: #ffffff;
@@ -34,9 +43,34 @@ button {
   margin-left: 50px;
 }
 
+button:hover, .button:hover {
+  /* filter: drop-shadow(0 0 0.75rem); */
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+}
+
+.form-control {
+  /* width: auto; */
+  width: 1000px !important;
+  /* align-self: center; */
+}
+
+h1 {
+  font-family: 'Windsor';
+  font-style: normal;
+  font-weight: 800 !important;
+  font-size: 2rem !important;
+  line-height: 28px;
+  text-align: justify;
+}
+
 .active {
-  background: #000000 !important;
-  color: #ffffff !important;
+  /* background: rgba(255, 0, 0, 0.01); */
+  /* color: #ffffff !important;  */
+  text-decoration: underline;
+  padding: 0.1rem 2rem 0.1rem 2rem !important;
+  border: 2px solid #000000;
+  box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.25);
+  border-radius: 12px !important;
 }
 
 .email-btn {
@@ -58,6 +92,36 @@ button {
 
   /* backdrop-filter: blur(10px); set the amount of blur here */
 }
+
+.web, .datavisualization, .visual, .frontend, .creativecoding {
+  color: #ffffff;
+}
+
+.web {
+  background: rgba(26, 37, 129, 0.8);
+}
+
+.datavisualization {
+  background: rgba(55, 106, 195, 0.8);
+  /* rgba(32, 54, 107, 0.8); */
+}
+
+.frontend {
+  background: rgba(45, 9, 92, 0.8);
+}
+
+.creativecoding {
+  background: rgba(71, 171, 147, 0.8);
+}
+
+.visual {
+  background: rgba(154, 39, 42, 0.8);
+}
+
+/* rgba(174, 72, 34, 0.8);
+rgba(248, 195, 29, 0.8);
+rgba(221, 119, 119, 0.8); */
+
 
 @media (max-width: 640px) {
   input,
