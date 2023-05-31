@@ -11,6 +11,7 @@ import Notfound from "./components/ui/NotFound";
 import Header from "./components/Header";
 import Loading from "./components/ui/Loading";
 import Login from './components/ui/Login';
+import FilterBar from "./components/FitlerBar";
 
 
 function App() {
@@ -31,14 +32,14 @@ function App() {
           <AuthContext.Provider value={{ isAuth, login, logout, setLoginPassword, setLoginEmail, user, toggleLogin }}>
             <Router>
               <Header />
-              <div className='lg:max-w-7xl container mx-auto'>
+              <div className='lg:max-w-7xl container mx-auto px-4 xl:px-0'>
                 {loading ?
                   <Loading />
                   :
                   <>
                     {loginVisible && <Login />}
                     <Routes>
-                      <Route path='/' element={<Posts />} />
+                      <Route path='/' element={<FilterBar />} />
                       <Route path='/new' element={<CreatePost />} />
                       <Route path=':id' element={<Post />} />
                       <Route path="*" element={<Notfound />} />

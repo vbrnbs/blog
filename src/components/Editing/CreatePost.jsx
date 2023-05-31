@@ -16,8 +16,11 @@ const CreatePost = () => {
     title: "",
     text: "",
     imageUrl: "",
+    // imgSM: "",
     createdAt: Timestamp.now().toDate(),
+    date: "",
     tags: "",
+    topics: "",
     git: "",
     url: ""
   });
@@ -35,7 +38,7 @@ const CreatePost = () => {
 
   const handleTagsChange = (e) => {
     setFormData({
-      ...formData, tags: e.target.value.toLowerCase().split(", ")
+      ...formData, [e.target.name]: e.target.value.toLowerCase().split(", ")
     })
   }
 
@@ -62,9 +65,13 @@ const CreatePost = () => {
           title: "",
           text: "",
           image: "",
+          // imageSM: "",
           tags: "",
+          topics: "",
+          date: "",
           git: "",
           url: ""
+          
         });
         getDownloadURL(uploadImage.snapshot.ref)
           .then((url) => {
@@ -73,8 +80,11 @@ const CreatePost = () => {
               title: formData.title,
               text: formData.text,
               imageUrl: url,
+              // imgageSM: formData.imageSM,
               createdAt: Timestamp.now().toDate(),
+              date: formData.date,
               tags: formData.tags,
+              topics: formData.topics,
               git: formData.git,
               url: formData.url
             })
@@ -91,30 +101,15 @@ const CreatePost = () => {
 
   return (
     <div className='mt-12 mb-24 '>
-      {/* <div className='mt-12 mb-24 '>
-        <h2>Create Blog Post</h2>
-        <form onSubmit={handleNewPost} className=' '>
-          <label htmlFor="title"></label>
-          <input type="text" placeholder='Title' id="title" name="title" value={title} onChange={e => setTitle(e.target.value)} />
-
-          <label htmlFor="text"></label>
-          <textarea id="text" placeholder='Text' name="text" value={text} onChange={e => setText(e.target.value)} />
-
-          <label htmlFor="tags"></label>
-          <input type="text" id="tags" placeholder='Tags' name="tags" value={tags} onChange={e => setTags(e.target.value.split(','))} />
-
-          <button type="submit">Create Post</button>
-        </form>
-      </div> */}
       {user.user && (
-        <div className='flex flex-col border rounded-sm p-3 mt-3 bg-light' >
+        <div className='flex flex-col rounded-sm p-3 mt-3 bg-light' >
           <div className="my-4">
             <Link to={-1} className="my-32">
               back
             </Link>
           </div>
-          <div className='flex flex-col border rounded-sm p-3 mt-3 bg-light' >
-            <h2 className='mb-6'>Publish Post</h2>
+          <div className='flex flex-col rounded-sm p-3 mt-3 bg-light' >
+            <h2 className='mb-6'>create Post</h2>
             {/* title */}
             <label htmlFor=''>Title</label>
             <input type="text" name="title" value={formData.title} className="form-control" onChange={(e) => handleChange(e)} />
@@ -127,9 +122,21 @@ const CreatePost = () => {
             <label>Image</label>
             <input type="file" name='image' accept='image/*' className="form-control" onChange={(e) => handleImageChange(e)} />
 
+            {/* imageSM */}
+            <label>ImageSM</label>
+            <input type="file" name='imageSM' accept='image/*' className="form-control" onChange={(e) => handleImageChange(e)} />
+
+            {/* date */}
+            <label>Date</label>
+            <input type="date" name='date' className="form-control" onChange={(e) => handleChange(e)} />
+
             {/* tags */}
             <label>Tags</label>
-            <input type="string" name='tags' className="form-control" onChange={(e) => handleTagsChange(e)} />
+            <input type="text" name='tags' className="form-control" onChange={(e) => handleTagsChange(e)} />
+
+            {/* tags */}
+            <label>Topics</label>
+            <input type="text" name='topics' className="form-control" onChange={(e) => handleTagsChange(e)} />
 
             {/* git */}
             <label>Git Url</label>

@@ -52,7 +52,7 @@ const Post = () => {
       }
       <div className="flex justify-center items-center">
         <img
-          className='w-img rounded-sm drop-shadow-sm object-cover'
+          className='rounded-sm drop-shadow-sm object-cover'
           src={post.imageUrl}
           alt={post.title}
         />

@@ -28,8 +28,8 @@ const SearchBar = () => {
   }
 
   return (
-    <div className="mt-2">
-      <input type="text" placeholder="Search in text" value={searchValue} onChange={(e) => searchKeyword(e)} />
+    <div className="mt-8">
+      <input type="text" placeholder="Search in posts" value={searchValue} onChange={(e) => searchKeyword(e)} />
       <div className='mb-4'>
   {posts.filter(post => {
     const query = (post.text.toLowerCase() + post.title.toLowerCase()+ post.tags + post.topics)

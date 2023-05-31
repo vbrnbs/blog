@@ -9,6 +9,7 @@ function Login() {
         <div className='my-12'>
             <div>
                 {/* <h3> Login </h3> */}
+                <div className='mb-2'>LOGIN</div>
                 <input
                     tyep="email"
                     placeholder="Email..."
@@ -32,7 +33,9 @@ function Login() {
 
                     <div className='flex'>
                         <button onClick={logout} className='mr-8'>Log Out</button>
-                        User Logged In: {user._tokenResponse.email}
+                        <p className='mr-2'>
+                            User Logged In: {user._tokenResponse.email}
+                        </p>
                     </div>
                 </>
                 :
@@ -44,7 +47,6 @@ function Login() {
                         </div>
                     )}
                     <button 
-                        className='ml-2'
                         onClick={login}>
                         Log In
                     </button>

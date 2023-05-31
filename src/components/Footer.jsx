@@ -13,7 +13,7 @@ const Footer = () => {
           <div>
             <input type="text" placeholder="subject" />
           </div>
-          <div className="flex items-end">
+          <div className="lg:flex items-end">
             <textarea placeholder="message..." className="h-48 mr-4" style={{ transform: 'translateY(8px)' }} />
             <button>Send</button>
           </div>

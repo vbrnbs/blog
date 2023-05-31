@@ -8,16 +8,17 @@ const PostList = ({ post, selectedFilters, handleFilterButtonClick }) => {
         <>Loading</>
       ) : (
         post.map((post) => (
-          <div key={post.id} className='flex my-24 border border w-auto'>
+          <div key={post.id} className='flex lg:flex-row flex-col my-24 border'>
             <div>
               {/* 405x205 from 2026/1024 mac*/}
               <img
-                className='w-img rounded-sm drop-shadow-sm object-cover'
+                className='w-auto w-img rounded-sm drop-shadow-sm object-cover'
                 src={post.imageUrl}
                 alt={post.title}
               />
             </div>
-            <div className='ml-8 flex flex-col justify-between border w-auto'>
+
+            <div className='lg:ml-8 flex flex-col justify-between border w-auto'>
               <div>
                 <Link to={`./${post.id}`}>
                   <h1>{post.title}</h1>
