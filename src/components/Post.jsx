@@ -6,6 +6,13 @@ import EditPost from './Editing/EditPost';
 import useFetch from "../utils/useFetch";
 import Loading from "./ui/Loading";
 import { AuthContext } from "../utils/useAuth";
+import DOMPurify from 'dompurify';
+
+// This should be used for different posts, instead of pictures
+const htmlString = '<a href="#">link</a>';
+const sanitizedHtml = { __html: DOMPurify.sanitize(htmlString) };
+
+
 
 const Post = () => {
   const { id } = useParams();
@@ -51,11 +58,12 @@ const Post = () => {
         (<p> {new Date(post.createdAt.seconds * 1000).toLocaleDateString("en-US")}</p>)
       }
       <div className="flex justify-center items-center">
-        <img
+      <div dangerouslySetInnerHTML={sanitizedHtml}></div>
+        {/* <img
           className='rounded-sm drop-shadow-sm object-cover'
           src={post.imageUrl}
           alt={post.title}
-        />
+        /> */}
       </div>
       <p> {post.text} </p>
       <div className="mt-4">
