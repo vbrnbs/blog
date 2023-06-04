@@ -82,7 +82,7 @@ const CreatePost = () => {
               imageUrl: url,
               // imgageSM: formData.imageSM,
               createdAt: Timestamp.now().toDate(),
-              date: formData.date,
+              date: date.length > 0 ? formData.date : Timestamp.now().toDate(),
               tags: formData.tags,
               topics: formData.topics,
               git: formData.git,
