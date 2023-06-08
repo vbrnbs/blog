@@ -14,9 +14,8 @@ const Loading = () => {
   }, [navigate])
 
   return (
-    <div>
-
-      <h1>Loading...</h1>
+    <div className='h-96 flex justify-center items-center'>
+      <div className='loader'></div>
     </div>
   )
 }
