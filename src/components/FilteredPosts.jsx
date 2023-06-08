@@ -6,7 +6,7 @@ import PostList from './PostList';
 const FilteredPosts = ({ filterPosts, handleFilterButtonClick }) => {
 
   const { selectedFilters, filteredPosts } = useContext(FilteredPostsContext);
-  console.log('filterPosts_posts: ', filterPosts);
+  // console.log('filterPosts_posts: ', filterPosts);
   // console.log('selectedFilters', selectedFilters)
 
   return (

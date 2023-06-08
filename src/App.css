@@ -50,7 +50,7 @@ button:hover, .button:hover {
 
 .form-control {
   /* width: auto; */
-  width: 1000px !important;
+  width: 600px;
   /* align-self: center; */
 }
 

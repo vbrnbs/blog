@@ -4,6 +4,7 @@ import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { storage, db } from '../../firebaseConfig';
 import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../../utils/useAuth';
+import TinyMCE from '../ui/HTMLEditor';
 
 // https://github.com/vbrnbs/100DaysOfCode/blob/main/%2306-BlogWithFIleUpload/blog-fileupload/src/components/AddArticle.jsx
 
@@ -12,17 +13,21 @@ const CreatePost = () => {
   const [progress, setProgress] = useState(0);
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [text, setText] = useState('');
   const [formData, setFormData] = useState({
     title: "",
     text: "",
-    imageUrl: "",
+    // imageUrl: "",
+    desc: "",
     createdAt: Timestamp.now().toDate(),
+    date: "",
     tags: "",
+    topics: "",
     git: "",
     url: ""
   });
 
-  console.log(user.user)
+  console.log("text",text)
 
 
   const handleChange = (e) => {
@@ -35,18 +40,26 @@ const CreatePost = () => {
 
   const handleTagsChange = (e) => {
     setFormData({
-      ...formData, tags: e.target.value.toLowerCase().split(", ")
+      ...formData, [e.target.name]: e.target.value.toLowerCase().split(", ")
     })
   }
 
+  const handleDateChange = (e) => {
+    const selectedDate = e.target.value;
+    const date = selectedDate.length > 0 ? Timestamp.fromDate(new Date(selectedDate)) : Timestamp.now().toDate();
+    setFormData({ ...formData, date });
+  };
+  
+
   const handlePublish = () => {
-    if (!formData.title || !formData.text || !formData.image) {
-      alert('fill all the fields!')
+    console.log(formData)
+    if (!formData.title || !formData.text || !formData.image || !formData.desc || !formData.tags || !formData.topics) {
+      console.log('fill all the fields!')
       return;
     }
 
     const storageRef = ref(storage, `/images/${Date.now()}${formData.image.name}`);
-    const uploadImage = uploadBytesResumable(storageRef, formData.image)
+    const uploadImage = uploadBytesResumable(storageRef, formData.image);
 
     uploadImage.on("state_changed",
       (snapshot) => {
@@ -57,15 +70,7 @@ const CreatePost = () => {
       (err) => {
         console.log(err)
       },
-      () => {
-        setFormData({
-          title: "",
-          text: "",
-          image: "",
-          tags: "",
-          git: "",
-          url: ""
-        });
+       () => {
         getDownloadURL(uploadImage.snapshot.ref)
           .then((url) => {
             const articleRef = collection(db, "posts");
@@ -73,8 +78,11 @@ const CreatePost = () => {
               title: formData.title,
               text: formData.text,
               imageUrl: url,
+              desc: formData.desc,
               createdAt: Timestamp.now().toDate(),
+              date: formData.date,
               tags: formData.tags,
+              topics: formData.topics,
               git: formData.git,
               url: formData.url
             })
@@ -91,45 +99,47 @@ const CreatePost = () => {
 
   return (
     <div className='mt-12 mb-24 '>
-      {/* <div className='mt-12 mb-24 '>
-        <h2>Create Blog Post</h2>
-        <form onSubmit={handleNewPost} className=' '>
-          <label htmlFor="title"></label>
-          <input type="text" placeholder='Title' id="title" name="title" value={title} onChange={e => setTitle(e.target.value)} />
-
-          <label htmlFor="text"></label>
-          <textarea id="text" placeholder='Text' name="text" value={text} onChange={e => setText(e.target.value)} />
-
-          <label htmlFor="tags"></label>
-          <input type="text" id="tags" placeholder='Tags' name="tags" value={tags} onChange={e => setTags(e.target.value.split(','))} />
-
-          <button type="submit">Create Post</button>
-        </form>
-      </div> */}
       {user.user && (
-        <div className='flex flex-col border rounded-sm p-3 mt-3 bg-light' >
+        <div className='flex flex-col rounded-sm py-3 mt-3 bg-light' >
           <div className="my-4">
             <Link to={-1} className="my-32">
               back
             </Link>
           </div>
-          <div className='flex flex-col border rounded-sm p-3 mt-3 bg-light' >
-            <h2 className='mb-6'>Publish Post</h2>
+          <div className='flex flex-col rounded-sm py-3 mt-3 bg-light' >
+            <h2 className='mb-6'>create Post</h2>
             {/* title */}
             <label htmlFor=''>Title</label>
             <input type="text" name="title" value={formData.title} className="form-control" onChange={(e) => handleChange(e)} />
 
             {/* text */}
             <label htmlFor=''>Text</label>
-            <textarea name="text" value={formData.text} className="form-control h-24" onChange={(e) => handleChange(e)} />
+            <TinyMCE setFormData={setFormData} formData={formData} />
+            {/* <textarea name="text" value={formData.text} className="form-control h-48" onChange={(e) => handleChange(e)} /> */}
+
+            {/* text */}
+            <label htmlFor=''>Short Description</label>
+            <textarea name="desc" value={formData.desc} className="form-control h-28" onChange={(e) => handleChange(e)} />
 
             {/* image */}
             <label>Image</label>
-            <input type="file" name='image' accept='image/*' className="form-control" onChange={(e) => handleImageChange(e)} />
+            <input type="file" name='imageUrl' accept='image/*' className="form-control" onChange={(e) => handleImageChange(e)} />
+
+            {/* imageSM */}
+            {/* <label>ImageSM</label>
+            <input type="file" name='imageSM' accept='image/*' className="form-control" onChange={(e) => handleImageChange(e)} /> */}
+
+            {/* date */}
+            <label>Date</label>
+            <input type="date" name="date" className="form-control" onChange={(e) => handleChange(e)} />
 
             {/* tags */}
             <label>Tags</label>
-            <input type="string" name='tags' className="form-control" onChange={(e) => handleTagsChange(e)} />
+            <input type="text" name='tags' className="form-control" onChange={(e) => handleTagsChange(e)} />
+
+            {/* topics */}
+            <label>Topics</label>
+            <input type="text" name='topics' className="form-control" onChange={(e) => handleTagsChange(e)} />
 
             {/* git */}
             <label>Git Url</label>

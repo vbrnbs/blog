@@ -83,7 +83,6 @@ const FilterBar = () => {
   };
 
   function getArrayFromUrl(url) {
-    console.log('url', url)
     // const queryString = url.split('?')[1];
     const queryPairs = url.split('&');
     const resultArray = [];
@@ -96,7 +95,7 @@ const FilterBar = () => {
           resultArray.push(decodedValue);
         }
       });
-    console.log('resultArray', resultArray)
+    // console.log('resultArray', resultArray)
     setSelectedFilters(resultArray);
     return resultArray;
   }

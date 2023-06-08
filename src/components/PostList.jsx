@@ -7,37 +7,32 @@ const PostList = ({ post, selectedFilters, handleFilterButtonClick }) => {
       {!post && post !== 0 ? (
         <>Loading</>
       ) : (
-        post.map((post) => (
-          <div key={post.id} className='flex my-24 border border w-auto'>
+        post.map((postItem) => (
+          <div key={postItem.id} className='flex lg:flex-row flex-col my-24 border'>
             <div>
               {/* 405x205 from 2026/1024 mac*/}
               <img
-                className='w-img rounded-sm drop-shadow-sm object-cover'
-                src={post.imageUrl}
-                alt={post.title}
+                className='w-auto w-img rounded-sm drop-shadow-sm object-cover'
+                src={postItem.imageUrl}
+                alt={postItem.title}
               />
             </div>
-            <div className='ml-8 flex flex-col justify-between border w-auto'>
+
+            <div className='lg:ml-8 flex flex-col justify-between border w-auto'>
               <div>
-                <Link to={`./${post.id}`}>
-                  <h1>{post.title}</h1>
+                <Link to={`./${postItem.id}`}>
+                  <h1>{postItem.title}</h1>
                 </Link>
-                {post.date ? (
-                  <p>{post.date}</p>
-                ) : (
-                  <p> {new Date(post.createdAt.seconds * 1000).toLocaleDateString("en-US")}</p>
-                )}
-                <p className='mt-3 max-h-32 overflow-scroll'>{post.text}</p>
+                <p>{postItem.date ? postItem.date : new Date(postItem.date.seconds * 1000).toLocaleDateString('en-US', {day: 'numeric', month: 'long', year: 'numeric' })}</p>
+                {/* {postItem.date && new Date(postItem.date.seconds * 1000).toLocaleDateString('en-US', {day: 'numeric', month: 'long', year: 'numeric' })} */}
+                <p className='mt-3 max-h-32 overflow-scroll'>{postItem.desc && postItem.desc}</p>
               </div>
               <div className='flex justify-between border w-auto'>
                 <div>
-                  {post.tags.map((tag, idx) => (
-                    <Link
-                      key={`#${tag}-${idx}`}
-                      to={`./?tags=${tag}`}
-                    >
+                  {postItem.tags && postItem.tags.map((tag, idx) => (
+                    <Link key={`#${tag}-${idx}`} to={`./?tags=${tag}`}>
                       <button
-                        filtertype="tags"
+                        filtertype='tags'
                         filtervalue={tag}
                         onClick={handleFilterButtonClick}
                         className={selectedFilters.includes(tag) ? 'active' : ''}
@@ -50,16 +45,13 @@ const PostList = ({ post, selectedFilters, handleFilterButtonClick }) => {
               </div>
               <div className='flex justify-between border w-auto'>
                 <div>
-                  {post.topics &&
-                    post.topics.map((tag, idx) => {
+                  {postItem.topics &&
+                    postItem.topics.map((tag, idx) => {
                       const withoutSpace = tag.replace(/\s/g, '');
                       return (
-                        <Link
-                          key={`#${tag}-${idx}`}
-                          to={`./?topics=${tag}`}
-                        >
+                        <Link key={`#${tag}-${idx}`} to={`./?topics=${tag}`}>
                           <button
-                            filtertype="topics"
+                            filtertype='topics'
                             filtervalue={tag}
                             onClick={handleFilterButtonClick}
                             className={`${withoutSpace}${selectedFilters.includes(tag) ? ' active' : ''}`}

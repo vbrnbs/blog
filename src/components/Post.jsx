@@ -1,11 +1,12 @@
-import { Link, useParams } from "react-router-dom";
-import { FilteredPostsContext } from "../utils/useFiltering";
-import { useContext, useEffect, useReducer, useState } from "react";
+import React, { useContext, useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { FilteredPostsContext } from '../utils/useFiltering';
+import { AuthContext } from '../utils/useAuth';
+import DOMPurify from 'dompurify';
+import useFetch from '../utils/useFetch';
+import Loading from './ui/Loading';
 import DeletePost from './Editing/DeletePost';
 import EditPost from './Editing/EditPost';
-import useFetch from "../utils/useFetch";
-import Loading from "./ui/Loading";
-import { AuthContext } from "../utils/useAuth";
 
 const Post = () => {
   const { id } = useParams();
@@ -19,102 +20,70 @@ const Post = () => {
     const checkSource = () => {
       if (filteredPosts.length > 0) {
         return filteredPosts.find((post) => post.id === id);
-      }
-      else {
+      } else {
         return posts.find((post) => post.id === id);
       }
-    }
-    checkSource();
-    setPost(checkSource)
+    };
+    const selectedPost = checkSource();
+    setPost(selectedPost);
   }, [id, posts, filteredPosts]);
 
   const toggleEdit = () => {
-    setEditStates(!editStates)
+    setEditStates(!editStates);
   };
 
   if (loading || !post) {
     return <Loading />;
   }
 
-
+  const sanitizedText = { __html: DOMPurify.sanitize(post.text, { ADD_TAGS: ['style'] }) };
+  
   return (
     <div>
       <div className="mt-4 mb-16">
         <Link to={-1} className="text-xl hover:underline">
-          ⬅back
+          ⬅ Back
         </Link>
       </div>
       <h1>{post.title}</h1>
-      {post.date ?
-        (<p>{post.date}</p>)
-        :
-        (<p> {new Date(post.createdAt.seconds * 1000).toLocaleDateString("en-US")}</p>)
-      }
+      <p>{post.date}</p>
+      {/* <p>{new Date(post.date.seconds * 1000).toLocaleDateString('en-US', {day: 'numeric', month: 'long', year: 'numeric' })}</p> */}
       <div className="flex justify-center items-center">
-        <img
-          className='w-img rounded-sm drop-shadow-sm object-cover'
-          src={post.imageUrl}
-          alt={post.title}
-        />
+        <div dangerouslySetInnerHTML={sanitizedText}></div>
       </div>
-      <p> {post.text} </p>
       <div className="mt-4">
         {post.tags.map((tag, idx) => (
-          <Link
-            to={`/?tags=${tag}`}
-            key={`#${tag}-${idx}`}
-          >
-            <button
-              href="#"
-              onClick={() => setSelectedFilters([tag])}
-            >
-              {`#${tag}`}
+          <Link to={`/?tags=${tag}`} key={`#${tag}-${idx}`}>
+            <button href="#" onClick={() => setSelectedFilters([tag])}>
+              #{tag}
             </button>
           </Link>
         ))}
       </div>
       <div className="">
-      {post.topics &&
-                    post.topics.map((tag, idx) => {
-                      const withoutSpace = tag.replace(/\s/g, '');
-                      return (
-                        <Link
-                          key={`#${tag}-${idx}`}
-                          to={`/?topics=${tag}`}
-                        >
-                          <button
-                            filtertype="topics"
-                            filtervalue={tag}
-                            className={`${withoutSpace}${selectedFilters.includes(tag) ? ' active' : ''}`}
-                          >
-                            {`#${tag}`}
-                          </button>
-                        </Link>
-                      );
-                    })}
+        {post.topics &&
+          post.topics.map((tag, idx) => {
+            const withoutSpace = tag.replace(/\s/g, '');
+            return (
+              <Link key={`#${tag}-${idx}`} to={`/?topics=${tag}`}>
+                <button filtertype="topics" filtervalue={tag} className={`${withoutSpace}${selectedFilters.includes(tag) ? ' active' : ''}`}>
+                  #{tag}
+                </button>
+              </Link>
+            );
+          })}
       </div>
-      {user.user &&
+      {user.user && (
         <div className="flex mt-2">
           <DeletePost id={post.id} imageUrl={post.imageUrl} />
-          {/* <EditPost
-                      key={post.id}
-                      post={post}
-                      editStates={editStates}
-                      setEditStates={setEditStates}
-                    /> */}
-          <button
-            className='bg-yellow-500 hover:bg-yellow-600 font-bold py-2 px-4 rounded'
-            onClick={toggleEdit}
-          >Edit
+          <button className="bg-yellow-500 hover:bg-yellow-600 font-bold py-2 px-4 rounded" onClick={toggleEdit}>
+            Edit
           </button>
-
         </div>
-      }
-      {editStates &&
-        <EditPost post={post} editStates={editStates} setEditStates={setEditStates} />
-      }
+      )}
+      {editStates && <EditPost post={post} editStates={editStates} setEditStates={setEditStates} />}
     </div>
-  )
-}
+  );
+};
 
-export default Post
+export default Post;

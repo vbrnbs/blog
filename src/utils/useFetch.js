@@ -13,7 +13,7 @@ export default function useFetch() {
         const getPosts = async () => {
             setLoading(true);
             const postsCollectionRef = collection(db, "posts");
-            const q = query(postsCollectionRef, orderBy("createdAt", "desc"));
+            const q = query(postsCollectionRef, orderBy("date", "desc"));
             const querySnapshot = await getDocs(q);
             const data = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
             setPosts(data);

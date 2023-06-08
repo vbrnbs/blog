@@ -7,14 +7,16 @@ function Login() {
 
     return (
         <div className='my-12'>
-            <div>
+            <div className='block'>
                 {/* <h3> Login </h3> */}
+                <div className='mb-2'>LOGIN</div>
                 <input
                     tyep="email"
                     placeholder="Email..."
                     onChange={(event) => {
                         setLoginEmail(event.target.value);
                     }}
+                    className='lg:mr-4 lg:w-1/3'
                 />
                 <input
                     type="password"
@@ -22,6 +24,7 @@ function Login() {
                     onChange={(event) => {
                         setLoginPassword(event.target.value);
                     }}
+                    className='lg:w-1/4'
                 />
 
                 {/* <button onClick={login}>Log In</button> */}
@@ -32,7 +35,9 @@ function Login() {
 
                     <div className='flex'>
                         <button onClick={logout} className='mr-8'>Log Out</button>
-                        User Logged In: {user._tokenResponse.email}
+                        <p className='mr-2'>
+                            User Logged In: {user._tokenResponse.email}
+                        </p>
                     </div>
                 </>
                 :
@@ -44,7 +49,6 @@ function Login() {
                         </div>
                     )}
                     <button 
-                        className='ml-2'
                         onClick={login}>
                         Log In
                     </button>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { Timestamp, collection, setDoc, doc } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { storage, db } from '../../firebaseConfig';
@@ -8,139 +8,113 @@ const EditPost = ({ post }) => {
   const [progress, setProgress] = useState(0);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    title: post.title,
-    text: post.text,
-    date: post.date,
-    tags: post.tags.join(", "),
-    topics: post.topics.join(", "),
-    imageUrl: post.imageUrl,
-    createdAt: post.createdAt,
-    git: post.git,
-    url: post.url
+    title: post.title || '',
+    text: post.text || '',
+    date: post.date ? post.date.toDate().toISOString().split('T')[0] : '',
+    tags: post.tags && post.tags,
+    topics: post.topics && post.topics,
+    imageUrl: post.imageUrl || '',
+    createdAt: post.createdAt || null,
+    git: post.git || '',
+    url: post.url || ''
   });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  }
-
-  const handleImageChange = (e) => {
-    setFormData({ ...formData, image: e.target.files[0] });
-  }
-
-  const handleTagsChange = (e) => {
-    setFormData({
-      ...formData, [e.target.name]: e.target.value.toLowerCase().split(",")
-    })
-  }
+  };
 
   const handlePublish = () => {
+    console.log(formData);
 
-    // const storageRef = ref(storage, `/images/${Date.now()}${formData.image.name}`);
-    // const uploadImage = uploadBytesResumable(storageRef, formData.image)
-
-    // uploadImage.on("state_changed",
-    //   (snapshot) => {
-    //     const progressPercent = Math.round(
-    //       (snapshot.bytesTransferred / snapshot.totalBytes) * 100)
-    //     setProgress(progressPercent);
-    //   },
-    //   (err) => {
-    //     console.log(err)
-    //   },
-    //   () => {
-    //     getDownloadURL(uploadImage.snapshot.ref)
-    //       .then((url) => {
-            const docRef = doc(db, "posts", post.id);
-            setDoc(docRef, {
-              title: formData.title,
-              text: formData.text,
-              date: formData.date,
-              imageUrl: formData.imageUrl,
-              createdAt: Timestamp.now().toDate(),
-              tags: formData.tags,
-              topics: formData.topics,
-              git: formData.git,
-              url: formData.url
-            })
-              .then(() => {
-                setProgress(0)
-                navigate('/');
-              })
-              .catch(err => {
-              })
-          }
-          //)
-    //    }
-    //  )
-  //}
-
-  console.log("posts", formData)
-  console.log(post.tags.join(","))
-
+    const docRef = doc(db, 'posts', post.id);
+    setDoc(docRef, {
+      title: formData.title,
+      text: formData.text,
+      date: formData.date,
+      imageUrl: formData.imageUrl,
+      createdAt: formData.createdAt || Timestamp.now().toDate(),
+      tags: formData.tags && formData.tags,
+      topics: formData.topics && formData.topics,
+      git: formData.git,
+      url: formData.url
+    })
+      .then(() => {
+        setProgress(0);
+        console.log('Document successfully written!', formData);
+        navigate('/');
+      })
+      .catch((error) => {
+        console.error('Error writing document: ', error);
+      });
+  };
 
   return (
     <div>
-      <div className='mt-12 mb-24 '>
-        {/* <div className='mt-12 mb-24 '>
-        <h2>Create Blog Post</h2>
-        <form onSubmit={handleNewPost} className=' '>
-          <label htmlFor="title"></label>
-          <input type="text" placeholder='Title' id="title" name="title" value={title} onChange={e => setTitle(e.target.value)} />
+      <div className="mt-12 mb-24">
+        <div className="flex flex-col border rounded-sm p-3 mt-3 bg-light">
+          <h2 className="mb-6">Publish Post</h2>
+          <a href="https://console.firebase.google.com/" target="_blank" rel="noopener noreferrer">
+            https://console.firebase.google.com/
+          </a>
 
-          <label htmlFor="text"></label>
-          <textarea id="text" placeholder='Text' name="text" value={text} onChange={e => setText(e.target.value)} />
+          <label htmlFor="title">Title</label>
+          <input type="text" name="title" value={formData.title} className="form-control" onChange={handleChange} />
 
-          <label htmlFor="tags"></label>
-          <input type="text" id="tags" placeholder='Tags' name="tags" value={tags} onChange={e => setTags(e.target.value.split(','))} />
+          <label htmlFor="date">New Date?</label>
+          <input
+            type="date"
+            name="date"
+            value={formData.date}
+            className="form-control"
+            onChange={handleChange}
+          />
 
-          <button type="submit">Create Post</button>
-        </form>
-      </div> */}
-        <div className='flex flex-col border rounded-sm p-3 mt-3 bg-light' >
-          <h2 className='mb-6'>Publish Post</h2>
-          {/* title */}
-          <label htmlFor=''>Title</label>
-          <input type="text" name="title" value={formData.title} className="form-control" onChange={(e) => handleChange(e)} />
-          {/* date */}
-          <label for="date">New Date?</label>
-          <input type="text" name="date" value={formData.date} className="form-control" onChange={(e) => handleChange(e)} />
-          {/* text */}
-          <label htmlFor=''>Text</label>
-          <textarea name="text" value={formData.text} className="form-control h-24" onChange={(e) => handleChange(e)} />
+          <label htmlFor="text">Text</label>
+          <textarea name="text" value={formData.text} className="form-control h-24" onChange={handleChange} />
 
-          {/* image */}
-          <label>Image</label>
-          <input type="file" name='image' accept='image/*' className="form-control" onChange={(e) => handleImageChange(e)} />
+          <label>Git URL</label>
+          <input type="url" name="git" value={formData.git} className="form-control" onChange={handleChange} />
 
-          {/* tags */}
-          <label>Tags</label>
-          <input type="text" name='tags' value={formData.tags} className="form-control" onChange={(e) => handleTagsChange(e)} />
-           
-           {/* topics */}
-           <label>Topics</label>
-          <input type="text" name='topics' value={formData.topics} className="form-control" onChange={(e) => handleTagsChange(e)} />
+          <label>Live URL</label>
+          <input type="url" name="url" value={formData.url} className="form-control" onChange={handleChange} />
 
-          {/* git */}
-          <label>Git Url</label>
-          <input type="url" name='git' value={formData.git} className="form-control" onChange={(e) => handleChange(e)} />
-
-          {/* git */}
-          <label>Live Url</label>
-          <input type="url" name='url' value={formData.url}  className="form-control" onChange={(e) => handleChange(e)} />
-
-          {/* progress */}
           {progress === 0 ? null : (
-            <div className="form-control my-4 ">
-              <div className="rounded my-2 h-2 bg-yellow-400" style={{ width: `${progress}%` }}>
-              </div>
-              <p>{`uploading image ${progress}%`}</p>
+            <div className="form-control my-4">
+              <div className="rounded my-2 h-2 bg-yellow-400" style={{ width: `${progress}%` }}></div>
+              <p>{`Uploading image ${progress}%`}</p>
             </div>
           )}
-          <button className='mt-2 w-36' onClick={handlePublish}>Publish</button>
+          <button className="mt-2 w-36" onClick={handlePublish}>
+            Publish
+          </button>
         </div>
-      </div >
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default EditPost
+export default EditPost;
+
+
+  // const handleImageChange = (e) => {
+  //   setFormData({ ...formData, image: e.target.files[0] });
+  // };
+
+  // const handleTagsChange = (e) => {
+  //   setFormData({
+  //     ...formData,
+  //     [e.target.name]: e.target.value.toLowerCase().split(/,\s*/)
+  //   });
+  // };
+
+
+          {/* <label>Image</label>
+          <input type="file" name="image" accept="image/*" className="form-control" onChange={handleImageChange} />
+
+          <label>Tags</label>
+          <input type="text" name="tags" value={formData.tags} onChange={handleTagsChange} />
+
+          <label>Topics</label>
+          <input type="text" name="topics" value={formData.topics} className="form-control" onChange={handleTagsChange} /> */}
+
+
