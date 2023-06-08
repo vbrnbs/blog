@@ -1,5 +1,8 @@
 import React, { useContext } from 'react'
 import Icons from './ui/Icons'
+import github from '../assets/github.svg'
+import linkedin from '../assets/linkedin.svg'
+import vimeo from '../assets/vimeo.svg'
 import { Link } from 'react-router-dom'
 import login from '../assets/login.svg'
 import { AuthContext } from "../utils/useAuth";
@@ -31,6 +34,18 @@ const Header = () => {
               <Link to={"/new"}>
                 <h1 className='mr-1 bg-black text-white p-1 rounded-md'>new</h1>
               </Link>
+              <div className='flex items-center'>
+                <a href="" className="mr-1">
+                    <img src={github} />
+                </a>
+                <a href="" className="mr-1">
+                    <img src={vimeo} />
+                </a>
+                <a href="" className="mr-1">
+                    <img src={linkedin} />
+                </a>
+              </div>
+
               <Icons />
             </div>
           </div>
@@ -38,6 +53,7 @@ const Header = () => {
           <div className="ml-8 cursor-pointer flex items-center">
             
             <p
+              title='Login'
               className='align-middle mr-1 text-3xl'
               onClick={toggleLogin} >💥
             </p>
