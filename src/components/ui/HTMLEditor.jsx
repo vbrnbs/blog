@@ -5,7 +5,7 @@ export default function HTMLEditor({formData, setFormData}) {
   const editorRef = useRef(null);
   const log = () => {
     if (editorRef.current) {
-      console.log(editorRef.current.getContent());    
+      console.log(formData);    
       setFormData({ ...formData, text: editorRef.current.getContent() });
       
     }

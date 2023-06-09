@@ -12,6 +12,7 @@ const EditPost = ({ post }) => {
     title: post.title || '',
     text: post.text || '',
     date: post.date,
+    desc: post.desc || '',
     tags: post.tags && post.tags,
     topics: post.topics && post.topics,
     imageUrl: post.imageUrl || '',
@@ -31,6 +32,7 @@ const EditPost = ({ post }) => {
     setDoc(docRef, {
       title: formData.title,
       text: formData.text,
+      desc: formData.desc,
       date: formData.date,
       imageUrl: formData.imageUrl,
       createdAt: formData.createdAt || Timestamp.now().toDate(),
@@ -71,8 +73,12 @@ const EditPost = ({ post }) => {
           />
 
           <label htmlFor="text">Text</label>
-          <textarea name="text" value={formData.text} className="form-control h-24" onChange={handleChange} />
-          {/* <HTMLEditor formData={formData} setFormData={setFormData} /> */}
+          {/* <textarea name="text" value={formData.text} className="form-control h-24" onChange={handleChange} /> */}
+          <HTMLEditor formData={formData} setFormData={setFormData} />
+
+          <label htmlFor="desc">Description</label>
+          <textarea name="desc" value={formData.desc} className="form-control h-24" onChange={handleChange} />
+
 
           <label>Git URL</label>
           <input type="url" name="git" value={formData.git} className="form-control" onChange={handleChange} />
