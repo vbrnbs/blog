@@ -15,7 +15,7 @@ export default function HTMLEditor({formData, setFormData}) {
       <Editor
         apiKey={import.meta.env.VITE_REACT_APP_TINYMCE}
         onInit={(evt, editor) => editorRef.current = editor}
-        initialValue="<p>This is the initial content of the editor.</p>"
+        initialValue={formData.text.length > 0 ? formData.text : "<p>This is the initial content of the editor.</p>"}
         init={{
           height: 500,
           menubar: true,

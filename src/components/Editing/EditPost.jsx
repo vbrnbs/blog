@@ -3,6 +3,7 @@ import { Timestamp, collection, setDoc, doc } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { storage, db } from '../../firebaseConfig';
 import { useNavigate, Link } from 'react-router-dom';
+import HTMLEditor from '../ui/HTMLEditor';
 
 const EditPost = ({ post }) => {
   const [progress, setProgress] = useState(0);
@@ -10,7 +11,7 @@ const EditPost = ({ post }) => {
   const [formData, setFormData] = useState({
     title: post.title || '',
     text: post.text || '',
-    date: post.date ? post.date.toDate().toISOString().split('T')[0] : '',
+    date: post.date,
     tags: post.tags && post.tags,
     topics: post.topics && post.topics,
     imageUrl: post.imageUrl || '',
@@ -71,6 +72,7 @@ const EditPost = ({ post }) => {
 
           <label htmlFor="text">Text</label>
           <textarea name="text" value={formData.text} className="form-control h-24" onChange={handleChange} />
+          {/* <HTMLEditor formData={formData} setFormData={setFormData} /> */}
 
           <label>Git URL</label>
           <input type="url" name="git" value={formData.git} className="form-control" onChange={handleChange} />
