@@ -27,9 +27,9 @@ const PostList = ({ post, selectedFilters, handleFilterButtonClick }) => {
                 </Link>
                 <p>{postItem.date ? postItem.date : new Date(postItem.date.seconds * 1000).toLocaleDateString('en-US', {day: 'numeric', month: 'long', year: 'numeric' })}</p>
                 {/* {postItem.date && new Date(postItem.date.seconds * 1000).toLocaleDateString('en-US', {day: 'numeric', month: 'long', year: 'numeric' })} */}
-                <p className='mt-3 max-h-32 overflow-scroll'>{postItem.desc && postItem.desc}</p>
+                <p className='mt-3 max-h-24 overflow-scroll'>{postItem.desc && postItem.desc}</p>
               </div>
-              <div className='flex justify-between w-auto'>
+              <div className='flex justify-between w-auto mt-2 mb-2'>
                 <div>
                   {postItem.tags && postItem.tags.map((tag, idx) => (
                     <Link key={`#${tag}-${idx}`} to={`./?tags=${tag}`}>
