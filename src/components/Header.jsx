@@ -34,18 +34,6 @@ const Header = () => {
               <Link to={"/new"}>
                 <h1 className='mr-1 bg-black text-white p-1 rounded-md'>new</h1>
               </Link>
-              <div className='flex items-center'>
-                <a href="" className="mr-1">
-                    <img src={github} />
-                </a>
-                <a href="" className="mr-1">
-                    <img src={vimeo} />
-                </a>
-                <a href="" className="mr-1">
-                    <img src={linkedin} />
-                </a>
-              </div>
-
               <Icons />
             </div>
           </div>

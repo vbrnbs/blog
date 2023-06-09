@@ -7,6 +7,8 @@ import useFetch from '../utils/useFetch';
 import Loading from './ui/Loading';
 import DeletePost from './Editing/DeletePost';
 import EditPost from './Editing/EditPost';
+import github from '../assets/github.svg';
+import url from '../assets/url.svg';
 
 const Post = () => {
   const { id } = useParams();
@@ -45,19 +47,19 @@ const Post = () => {
 }
   
   return (
-    <div>
-      <div className="mt-4 mb-16">
+    <div className="container">
+      <div className="mt-4 mb-24">
         <Link to={-1} className="text-xl hover:underline">
-          ⬅ Back
+          ⬅ back
         </Link>
       </div>
       <h1>{post.title}</h1>
       <p>{post.date}</p>
       {/* <p>{new Date(post.date.seconds * 1000).toLocaleDateString('en-US', {day: 'numeric', month: 'long', year: 'numeric' })}</p> */}
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center mt-12">
         <div dangerouslySetInnerHTML={sanitizedText}></div>
       </div>
-      <div className="mt-4">
+      <div className="mt-12">
         {post.tags.map((tag, idx) => (
           <Link to={`/?tags=${tag}`} key={`#${tag}-${idx}`}>
             <button href="#" onClick={() => setSelectedFilters([tag])}>
@@ -66,7 +68,7 @@ const Post = () => {
           </Link>
         ))}
       </div>
-      <div className="">
+      <div className="mt-4 mb-8">
         {post.topics &&
           post.topics.map((tag, idx) => {
             const withoutSpace = tag.replace(/\s/g, '');
@@ -79,6 +81,24 @@ const Post = () => {
             );
           })}
       </div>
+      <div className="flex items-center w-1/4 justify around mb-32">
+      {post.git && 
+      <div className='w-12 text-center'>
+        <a className='w-100' target='_blank' href={post.git} title='View on Github'>
+          <img src={github} />
+        </a>
+      </div>
+      }
+      {post.url && 
+      <div className='text-center text-2xl'>
+        
+        <a className='w-100' target='_blank' href={post.url} title='Visit URL'>
+          <img src={url} />
+        </a>
+      </div>
+      }
+      </div>
+      
       {user.user && (
         <div className="flex mt-2">
           <DeletePost id={post.id} imageUrl={post.imageUrl} />
