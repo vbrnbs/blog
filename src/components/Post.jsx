@@ -36,7 +36,13 @@ const Post = () => {
     return <Loading />;
   }
 
-  const sanitizedText = { __html: DOMPurify.sanitize(post.text, { ADD_TAGS: ['style'] }) };
+  // const sanitizedText = { __html: DOMPurify.sanitize(post.text, { ADD_TAGS: ['style'] }) };
+  const sanitizedText = { __html: DOMPurify.sanitize(post.text, {
+    ADD_TAGS: ['iframe','style'],
+    ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling', 'src'],
+    ALLOWED_URI_REGEXP: /^(?:(?:https?|mailto|ftp):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i
+  })
+}
   
   return (
     <div>
