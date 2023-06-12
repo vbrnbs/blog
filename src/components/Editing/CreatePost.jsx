@@ -61,6 +61,9 @@ const CreatePost = () => {
       return;
     }
 
+    formData.text && handleChange(formData.text);
+    formData.desc && handleChange(formData.desc);
+
     const storageRef = ref(storage, `/images/${Date.now()}${formData.image.name}`);
     const uploadImage = uploadBytesResumable(storageRef, formData.image);
 
