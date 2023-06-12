@@ -5,6 +5,7 @@ import { storage, db } from '../../firebaseConfig';
 import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../../utils/useAuth';
 import TinyMCE from '../ui/HTMLEditor';
+import { PostContext } from '../../utils/useFetch';
 
 // https://github.com/vbrnbs/100DaysOfCode/blob/main/%2306-BlogWithFIleUpload/blog-fileupload/src/components/AddArticle.jsx
 
@@ -12,6 +13,7 @@ const CreatePost = () => {
 
   const [progress, setProgress] = useState(0);
   const { user } = useContext(AuthContext);
+  const { useFetch } = useContext(PostContext);
   const navigate = useNavigate();
   const [text, setText] = useState('');
   const [formData, setFormData] = useState({
@@ -26,8 +28,9 @@ const CreatePost = () => {
     git: "",
     url: ""
   });
+  
 
-  console.log("text",text)
+  console.log("text", text)
 
 
   const handleChange = (e) => {
@@ -49,12 +52,12 @@ const CreatePost = () => {
     const date = selectedDate.length > 0 ? Timestamp.fromDate(new Date(selectedDate)) : Timestamp.now().toDate();
     setFormData({ ...formData, date });
   };
-  
+
 
   const handlePublish = () => {
     console.log(formData)
     if (!formData.title || !formData.text || !formData.image || !formData.desc || !formData.tags || !formData.topics) {
-      console.log('fill all the fields!')
+      alert('fill all the fields!')
       return;
     }
 
@@ -70,7 +73,7 @@ const CreatePost = () => {
       (err) => {
         console.log(err)
       },
-       () => {
+      () => {
         getDownloadURL(uploadImage.snapshot.ref)
           .then((url) => {
             const articleRef = collection(db, "posts");
@@ -88,6 +91,7 @@ const CreatePost = () => {
             })
               .then(() => {
                 setProgress(0)
+                useFetch();
                 navigate('/');
               })
               .catch(err => {
