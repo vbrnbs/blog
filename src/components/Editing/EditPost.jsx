@@ -4,10 +4,12 @@ import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { storage, db } from '../../firebaseConfig';
 import { useNavigate, Link } from 'react-router-dom';
 import HTMLEditor from '../ui/HTMLEditor';
+import { PostContext } from '../../utils/useFetch';
 
 const EditPost = ({ post }) => {
   const [progress, setProgress] = useState(0);
   const navigate = useNavigate();
+  const { useFetch } = useContext(PostContext);
   const [formData, setFormData] = useState({
     title: post.title || '',
     text: post.text || '',
@@ -44,6 +46,7 @@ const EditPost = ({ post }) => {
       .then(() => {
         setProgress(0);
         console.log('Document successfully written!', formData);
+        useFetch();
         navigate('/');
       })
       .catch((error) => {
