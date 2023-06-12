@@ -28,10 +28,6 @@ const CreatePost = () => {
     git: "",
     url: ""
   });
-  
-
-  console.log("text", text)
-
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -90,6 +86,7 @@ const CreatePost = () => {
               url: formData.url
             })
               .then(() => {
+                console.log("Document successfully written!")
                 setProgress(0)
                 useFetch();
                 navigate('/');
