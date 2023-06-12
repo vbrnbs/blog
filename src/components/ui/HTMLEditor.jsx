@@ -15,7 +15,7 @@ export default function HTMLEditor({formData, setFormData}) {
       <Editor
         apiKey={import.meta.env.VITE_REACT_APP_TINYMCE}
         onInit={(evt, editor) => editorRef.current = editor}
-        initialValue={formData.text.length > 0 ? formData.text : `<iframe style="width: 100vw; height: 80vh; border: none;" src="https://merry-duckanoo-9d6225.netlify.app/" width="" height="" scrolling="auto" allowfullscreen></iframe>`}
+        initialValue={formData.text.length > 0 ? formData.text : `<iframe style="width: 100%; height: 80vh; border: none;" src="" width="" height="" scrolling="auto" allowfullscreen="allowfullscreen"></iframe>`}
         init={{
           height: 500,
           menubar: true,
