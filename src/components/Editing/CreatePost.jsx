@@ -28,10 +28,6 @@ const CreatePost = () => {
     git: "",
     url: ""
   });
-  
-
-  console.log("text", text)
-
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -60,9 +56,6 @@ const CreatePost = () => {
       alert('fill all the fields!')
       return;
     }
-
-    formData.text && handleChange(formData.text);
-    formData.desc && handleChange(formData.desc);
 
     const storageRef = ref(storage, `/images/${Date.now()}${formData.image.name}`);
     const uploadImage = uploadBytesResumable(storageRef, formData.image);
@@ -93,12 +86,12 @@ const CreatePost = () => {
               url: formData.url
             })
               .then(() => {
+                console.log("Document successfully written!")
                 setProgress(0)
                 useFetch();
                 navigate('/');
               })
               .catch(err => {
-                console.log(err)
               })
           })
       }
@@ -155,7 +148,7 @@ const CreatePost = () => {
 
             {/* git */}
             <label>Live Url</label>
-            <input type="url" name='url' className="form-control" onChange={(e) => handleChange(e)} />
+            <input type="url" name='live' className="form-control" onChange={(e) => handleChange(e)} />
 
             {/* progress */}
             {progress === 0 ? null : (
