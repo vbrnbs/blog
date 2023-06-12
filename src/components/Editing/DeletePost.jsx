@@ -1,3 +1,4 @@
+import React, { useContext } from 'react';
 import { deleteDoc, doc } from 'firebase/firestore';
 import { deleteObject, ref } from 'firebase/storage';
 import { storage, db } from './../../firebaseConfig';
