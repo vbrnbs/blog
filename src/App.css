@@ -93,7 +93,7 @@ h1 {
   /* backdrop-filter: blur(10px); set the amount of blur here */
 }
 
-.web, .datavisualization, .visual, .frontend, .creativecoding {
+.web, .datavisualization, .generative, .frontend, .creativecoding {
   color: #ffffff;
 }
 
@@ -114,7 +114,7 @@ h1 {
   background: rgba(71, 171, 147, 0.8);
 }
 
-.visual {
+.generative {
   background: rgba(154, 39, 42, 0.8);
 }
 

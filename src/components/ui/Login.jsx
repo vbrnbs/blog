@@ -32,18 +32,17 @@ function Login() {
 
             {user.user ?
                 <>
-
-                    <div className='flex'>
-                        <button onClick={logout} className='mr-8'>Log Out</button>
-                        <p className='mr-2'>
+                    <div className=''>
+                        <p className='m-2'>
                             User Logged In: {user._tokenResponse.email}
                         </p>
+                        <button onClick={logout} className='m-4 ml-0'>Log Out</button>
                     </div>
                 </>
                 :
-                <div className='flex'>
+                <div className='flex '>
                     {isAuth && (
-                        <div className='flex'>
+                        <div className='flex mr-2'>
                             {isAuth}
                             
                         </div>

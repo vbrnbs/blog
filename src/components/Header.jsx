@@ -32,7 +32,7 @@ const Header = () => {
             </div>
             <div className='text-sm items-center flex justify-center align-middle order-first lg:order-last'>
               <Link to={"/new"}>
-                <h1 className='mr-1 bg-black text-white p-1 rounded-md'>new</h1>
+                <p className='mr-1 border-4 border-black px-1 rounded-md text-sm hover:underline'>new</p>
               </Link>
               <Icons />
             </div>
