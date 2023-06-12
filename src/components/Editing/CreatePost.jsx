@@ -98,6 +98,7 @@ const CreatePost = () => {
                 navigate('/');
               })
               .catch(err => {
+                console.log(err)
               })
           })
       }
