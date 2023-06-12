@@ -61,9 +61,6 @@ const CreatePost = () => {
       return;
     }
 
-    formData.text && handleChange(formData.text);
-    formData.desc && handleChange(formData.desc);
-
     const storageRef = ref(storage, `/images/${Date.now()}${formData.image.name}`);
     const uploadImage = uploadBytesResumable(storageRef, formData.image);
 
@@ -98,7 +95,6 @@ const CreatePost = () => {
                 navigate('/');
               })
               .catch(err => {
-                console.log(err)
               })
           })
       }
@@ -155,7 +151,7 @@ const CreatePost = () => {
 
             {/* git */}
             <label>Live Url</label>
-            <input type="url" name='url' className="form-control" onChange={(e) => handleChange(e)} />
+            <input type="url" name='live' className="form-control" onChange={(e) => handleChange(e)} />
 
             {/* progress */}
             {progress === 0 ? null : (
