@@ -6,18 +6,20 @@ import vimeo from '../assets/vimeo.svg'
 import { Link } from 'react-router-dom'
 import login from '../assets/login.svg'
 import { AuthContext } from "../utils/useAuth";
+import { PostContext } from '../utils/useFetch'
 
 
 const Header = () => {
 
   const { toggleLogin, user } = useContext(AuthContext);
+  const { useFetch } = useContext(PostContext);
 
   return (
     <div className='py-3 px-4 flex justify-between'>
       <div className='align-bottom'>
         {/* <Link to='/' reloadDocument> */}
         <Link to='/'>
-          <h1 className="windsor text-2xl font-semibold">brnbs</h1>
+          <h1 className="windsor text-2xl font-semibold" onClick={useFetch} >brnbs</h1>
         </Link>
         {/* <Link to='/' >
           <h1 className="windsor font-semibold">reload</h1>
