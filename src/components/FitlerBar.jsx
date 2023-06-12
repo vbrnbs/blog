@@ -80,6 +80,7 @@ const FilterBar = () => {
     navigate({ search: searchParams.toString() });
     getArrayFromUrl("")
     setFilteredPosts([]);
+    setSearchValue("");
   };
 
   function getArrayFromUrl(url) {
