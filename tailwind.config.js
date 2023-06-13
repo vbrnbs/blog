@@ -8,6 +8,7 @@ module.exports = {
         bgSecondary: "",
         textPrimary: "",
         textSecondary: "",
+        vimeo: "#19B7EA",
         // add more colors here
       },
     },
