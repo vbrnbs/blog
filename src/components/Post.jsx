@@ -74,27 +74,28 @@ const Post = () => {
             const withoutSpace = tag.replace(/\s/g, '');
             return (
               <Link key={`#${tag}-${idx}`} to={`/?topics=${tag}`}>
-                <button filtertype="topics" filtervalue={tag} className={`${withoutSpace}${selectedFilters.includes(tag) ? ' active' : ''}`}>
+                <button filtertype="topics" filtervalue={tag} className={`mt-2 ${withoutSpace}${selectedFilters.includes(tag) ? ' active' : ''}`}>
                   #{tag}
                 </button>
               </Link>
             );
           })}
       </div>
-      <div className="flex items-center w-1/4 justify around mb-32">
+      <div className="flex items-center lg:w-1/4 justify-around lg:justify-between mb-32">
       {post.git && 
-      <div className='w-12 text-center'>
-        <a className='w-100' target='_blank' href={post.git} title='View on Github'>
+      <div className='flex flex-col justify-center'>
+        <a className='text-2xl flex justify-center mb-2' target='_blank' href={post.git} title='View on Github'>
           <img src={github} />
         </a>
+        View On GitHub
       </div>
       }
       {post.url && 
-      <div className='text-center text-2xl'>
-        
-        <a className='w-100' target='_blank' href={post.url} title='Visit URL'>
+      <div className='flex flex-col justify-center'>
+        <a className='text-2xl flex justify-center mb-2'  target='_blank' href={post.url} title='Visit URL'>
           <img src={url} />
         </a>
+        Visit Site
       </div>
       }
       </div>

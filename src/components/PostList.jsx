@@ -10,7 +10,7 @@ const PostList = ({ post, selectedFilters, handleFilterButtonClick }) => {
         <>Loading</>
       ) : (
         post.map((postItem) => (
-          <div key={postItem.id} className='flex lg:flex-row flex-col my-24 items-center lg:justify-center'>
+          <div key={postItem.id} className='flex lg:flex-row flex-col my-36 items-center lg:justify-center'>
             <div>
               {/* 405x205 from 2026/1024 mac*/}
               <img
@@ -20,7 +20,7 @@ const PostList = ({ post, selectedFilters, handleFilterButtonClick }) => {
               />
             </div>
 
-            <div className='lg:ml-8 flex flex-col justify-between w-auto'>
+            <div className='mt-4 lg:mb-8 lg:ml-8 mt-12 flex flex-col justify-between w-auto'>
               <div>
                 <Link to={`./${postItem.id}`}>
                   <h1>{postItem.title}</h1>
@@ -37,7 +37,7 @@ const PostList = ({ post, selectedFilters, handleFilterButtonClick }) => {
                         filtertype='tags'
                         filtervalue={tag}
                         onClick={handleFilterButtonClick}
-                        className={selectedFilters.includes(tag) ? 'active' : ''}
+                        className={`mr-1 my-2 ${selectedFilters.includes(tag) ? 'active' : ''}`}
                       >
                         {`#${tag}`}
                       </button>
@@ -56,7 +56,7 @@ const PostList = ({ post, selectedFilters, handleFilterButtonClick }) => {
                             filtertype='topics'
                             filtervalue={tag}
                             onClick={handleFilterButtonClick}
-                            className={`${withoutSpace}${selectedFilters.includes(tag) ? ' active' : ''}`}
+                            className={`mr-1 mt-1 ${withoutSpace}${selectedFilters.includes(tag) ? ' active' : ''}`}
                           >
                             {`#${tag}`}
                           </button>
@@ -65,6 +65,7 @@ const PostList = ({ post, selectedFilters, handleFilterButtonClick }) => {
                     })}
                 </div>
               </div>
+              <hr className='mt-0 '/>
             </div>
           </div>
         ))

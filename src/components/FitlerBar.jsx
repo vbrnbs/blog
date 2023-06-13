@@ -71,7 +71,16 @@ const FilterBar = () => {
             }
           });
       });
-    return frequency;
+      // Convert the frequency object into an array of [tag, count] pairs
+  const frequencyArray = Object.entries(frequency);
+
+  // Sort the frequency array in descending order based on the count
+  frequencyArray.sort((a, b) => b[1] - a[1]);
+
+  // Convert the sorted frequency array back into an object
+  const sortedFrequency = Object.fromEntries(frequencyArray);
+
+  return sortedFrequency;
   };
 
   const clearFilters = () => {
