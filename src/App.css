@@ -189,17 +189,17 @@ rgba(221, 119, 119, 0.8); */
   0% {
     transform: rotate(0);
   }
-  15% {
+  60% {
+    transform: rotate(0);
+  }
+  75% {
     transform: rotate(10deg) translateX(-1px);
   }
   /* 30% {
     transform: translateY(-10px) translateX(1px);
   } */
-  25% {
+  85% {
     transform: rotate(-25deg) translateX(1px);
-  }
-  40% {
-    transform: rotate(0);
   }
   100% {
     transform: rotate(0);
