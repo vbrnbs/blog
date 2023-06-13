@@ -30,8 +30,8 @@ const Icons = () => {
             <a target='_blank' href="https://github.com/vbrnbs" className="mr-1" title='GitHub'>
                 <img src={github} />
             </a>
-            <a target='_blank' href="https://vimeo.com/user47402173" className="mr-1 hover:scale-125 ease-linear " title='Vimeo'>
-                <img src={vimeo} />
+            <a target='_blank' href="https://vimeo.com/user47402173" className="mr-1 animated-button hover:scale-125 ease-linear " title='Vimeo'>
+                <img className="hover:scale-125 ease-in-out " src={vimeo} />
             </a>
             <a target='_blank' href="https://www.linkedin.com/in/barnabasvarszegi/" className="mr-1" title='LinkedIn'>
                 <img src={linkedin} />

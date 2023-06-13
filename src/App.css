@@ -184,3 +184,41 @@ rgba(221, 119, 119, 0.8); */
 @keyframes load {
   0% {background-size: 0% 100%}
 }
+
+@keyframes buttonAnimation {
+  0% {
+    transform: rotate(0);
+  }
+  15% {
+    transform: rotate(10deg) translateX(-1px);
+  }
+  /* 30% {
+    transform: translateY(-10px) translateX(1px);
+  } */
+  25% {
+    transform: rotate(-25deg) translateX(1px);
+  }
+  40% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(0);
+  }
+}
+
+.animated-button {
+  position: relative;
+  display: inline-block;
+  border: none;
+  cursor: pointer;
+  animation: buttonAnimation 5s infinite;
+}
+
+.animated-button:hover {
+  transform: scale(2);
+}
+
+.animated-button:hover svg {
+  transform-origin: center;
+  transition: transform 0.5s ease-in-out;
+}
