@@ -8,7 +8,7 @@ const Loading = () => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       navigate(-1, { state: "sorry, page doesnt exist" })
-    }, 5000)
+    }, 8000)
 
     return () => clearTimeout(timeout)
   }, [navigate])
