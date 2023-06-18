@@ -3,7 +3,7 @@ import { Timestamp, collection, setDoc, doc } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { storage, db } from '../../firebaseConfig';
 import { useNavigate, Link } from 'react-router-dom';
-import HTMLEditor from '../ui/HTMLEditor';
+import HTMLEditor from '../ui/TInyMCE/HTMLEditor';
 import { PostContext } from '../../utils/useFetch';
 
 const EditPost = ({ post }) => {
