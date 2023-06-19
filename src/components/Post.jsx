@@ -56,7 +56,7 @@ const Post = () => {
       <h1>{post.title}</h1>
       <p>{post.date}</p>
       {/* <p>{new Date(post.date.seconds * 1000).toLocaleDateString('en-US', {day: 'numeric', month: 'long', year: 'numeric' })}</p> */}
-      <div className="flex justify-center items-center px-2 mt-12">
+      <div className="flex justify-center items-center mt-12">
         <div dangerouslySetInnerHTML={sanitizedText}></div>
       </div>
       <div className="mt-12">
