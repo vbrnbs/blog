@@ -49,14 +49,14 @@ const Post = () => {
   return (
     <div className="container">
       <div className="mt-4 mb-24">
-        <Link to={-1} className="text-xl hover:underline">
+        <Link to="/" className="text-xl hover:underline">
           ⬅ back
         </Link>
       </div>
       <h1>{post.title}</h1>
       <p>{post.date}</p>
       {/* <p>{new Date(post.date.seconds * 1000).toLocaleDateString('en-US', {day: 'numeric', month: 'long', year: 'numeric' })}</p> */}
-      <div className="flex justify-center items-center px-4 mt-12">
+      <div className="flex justify-center items-center px-2 mt-12">
         <div dangerouslySetInnerHTML={sanitizedText}></div>
       </div>
       <div className="mt-12">
