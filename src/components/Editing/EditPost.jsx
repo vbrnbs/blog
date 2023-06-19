@@ -45,12 +45,11 @@ const EditPost = ({ post }) => {
     })
       .then(() => {
         setProgress(0);
-        console.log('Document successfully written!', formData);
-        useFetch();
-        navigate('/');
+        alert('Document successfully written!', formData);
       })
       .catch((error) => {
         console.error('Error writing document: ', error);
+        alert('Error writing document: ', error)
       });
   };
 
@@ -98,6 +97,7 @@ const EditPost = ({ post }) => {
           <button className="mt-2 w-36" onClick={handlePublish}>
             Publish
           </button>
+          <></>
         </div>
       </div>
     </div>

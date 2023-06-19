@@ -13,8 +13,6 @@ const CreatePost = () => {
 
   const [progress, setProgress] = useState(0);
   const { user } = useContext(AuthContext);
-  const { useFetch } = useContext(PostContext);
-  const navigate = useNavigate();
   const [text, setText] = useState('');
   const [formData, setFormData] = useState({
     title: "",
@@ -86,12 +84,11 @@ const CreatePost = () => {
               url: formData.url
             })
               .then(() => {
-                console.log("Document successfully written!")
+                alert("Document successfully written!")
                 setProgress(0)
-                useFetch();
-                navigate('/');
               })
               .catch(err => {
+                alert("Error writing document: ", err)
               })
           })
       }
