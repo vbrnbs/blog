@@ -4,7 +4,7 @@ import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { storage, db } from '../../firebaseConfig';
 import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../../utils/useAuth';
-import TinyMCE from '../ui/HTMLEditor';
+import TinyMCE from '../ui/TInyMCE/HTMLEditor';
 import { PostContext } from '../../utils/useFetch';
 
 // https://github.com/vbrnbs/100DaysOfCode/blob/main/%2306-BlogWithFIleUpload/blog-fileupload/src/components/AddArticle.jsx

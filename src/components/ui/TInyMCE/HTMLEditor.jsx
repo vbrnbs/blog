@@ -28,6 +28,7 @@ export default function HTMLEditor({formData, setFormData}) {
             'bold italic forecolor fontfamily fontsize | alignleft aligncenter ' +
             'alignright alignjustify | bullist numlist outdent indent | ' +
             'removeformat | help',
+          content_css: 'tiny.css',
           content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
         }}
       />

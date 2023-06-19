@@ -131,7 +131,7 @@ const FilterBar = () => {
           onClick={handleFilterButtonClick}
         />
       </div>
-      <div className='mt-2 flex justify-end'>
+      <div className='mt-4 lg:mt-2 flex justify-end'>
         <div className='cursor-pointer windsor truncate hover:underline' onClick={clearFilters}>
           Clear filters
         </div >
