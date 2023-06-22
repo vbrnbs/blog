@@ -57,7 +57,7 @@ const Post = () => {
       <p>{post.date}</p>
       {/* <p>{new Date(post.date.seconds * 1000).toLocaleDateString('en-US', {day: 'numeric', month: 'long', year: 'numeric' })}</p> */}
       <div className="flex justify-center items-center mt-12">
-        <div dangerouslySetInnerHTML={sanitizedText}></div>
+        <div style={{width:100 + '%'}} dangerouslySetInnerHTML={sanitizedText}></div>
       </div>
       <div className="mt-12">
         {post.tags.map((tag, idx) => (
