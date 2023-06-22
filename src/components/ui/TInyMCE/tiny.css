@@ -1,27 +1,4 @@
-.responsive-iframe {
-    position: relative;
-    width: 100%;
-    padding-bottom: 56.25%; /* Set the aspect ratio (16:9 for this example) */
-  }
-  
-  .responsive-iframe iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-@media screen and (max-width: 600px) {
-    .responsive-iframe {
-        padding-bottom: 100%; /* Set the aspect ratio (16:9 for this example) */
-    }
-    .responsive-iframe iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 50%;
-      }
-    
+.center-on-mobile {
+  display: flex;
+  justify-content: center;
 }

@@ -24,13 +24,13 @@ export default function HTMLEditor({formData, setFormData}) {
           plugins: [
             'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
             'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-            'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
+            'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount', 'textbox'
           ],
-          toolbar: 'undo redo | code | ' +
+          toolbar: 'undo redo | code | textbox |'  +
             'bold italic forecolor fontfamily fontsize | alignleft aligncenter ' +
             'alignright alignjustify | bullist numlist outdent indent | ' +
             'removeformat | help',
-          content_css: 'tiny.css',
+          content_css: "/tiny.css",
           content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
         }}
       />
